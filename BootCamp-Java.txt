@@ -1,0 +1,889 @@
+3.5 days
+
+Java 
+Javascript
+Database-sql and nosql
+
+Timings
+9.30 to 5.30
+break:
+ Morning and Eve Tea Break- 20 mins
+ Lunch - 1 hr
+.....................................................................................
+				 Java 
+.....................................................................................
+
+Java Fundamentals:
+
+What is Java?
+ Java is Technology.
+ Java technology created at SUN Microsystems at 1989 to solve the problem of 
+ Platform(os+hardware) Portablity, with alternate to c and c++.
+ if you build software using c/c++, can used where it was created for eg UNIX means  only unix
+
+Java features:
+1.no pointers
+2.pure object oriented models
+3.platform netural
+4.easy to learn
+
+How java achives portablity?
+  JVM - Java virtual machine - software abstraction for platforms
+
+How to begin with java?
+ Java distributed lot of tools
+
+1. Javaprogramming langaugage
+2. JDK- Java development Kit
+    compilers -javac
+    Runtime  - java
+
+Byte code:
+  c and c++ source code is compiled, after that we can see compiled code which is written assembly language(which is os spefic)
+ java source is compiled after that we can see  compiled code which is written assembly language(byte/class file)(which is not os spefic)
+
+
+Java Editions:
+.............
+1.Java Standard Edition - JSE
+2.Java Enterprise Edition - JEE
+3.Java Micro Edition - JME
+
+Applications of Java:
+
+1.JSE
+  Core Language, called java language
+
+2.JEE 
+   Buliding Web App,database apps - Microservices
+ Servlet
+ JSP
+ JPA
+ JAX-RS/JAX-WS - Webservice
+ etc....
+
+Frameworks for java Technology
+
+1.Struts Web Framework - The first jee framework- no more this tech
+2.Spring Framework - It is no-1 java development framework
+3.Quarkus
+4.Vert.x
+5.Open Liberty
+etc...
+
+Java Versions:
+
+Java 1.0
+|
+Java 8
+|
+Java 11
+|
+Java 18
+
+JDK's
+......
+There are many vendors offer JDK.
+
+1.Oracle JDK - Commericial JDK for Production, dev free
+2.Open JDK - dev + production is free
+3.Azul JDK - commericial jdks
+4.IBM Jdk
+.....................................................................................
+			   JDK installation
+...................................................................................
+
+>java --version
+java 11.0.11 2021-04-20 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.11+9-LTS-194)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.11+9-LTS-194, mixed mode)
+....................................................................................
+			 How to write code Apps
+....................................................................................
+
+Req:
+1.JDK - 11
+2.Editors/IDE
+a.https://www.eclipse.org/downloads/
+b.https://www.jetbrains.com/idea/download/#section=windows -Intellij Idea
+c.https://code.visualstudio.com/ - VS Code.
+...................................................................................
+			  Build Systems
+...................................................................................
+
+Build system is tool for creating, managing softwares during dev,test cycles.
+
+Java Build System:
+
+1.Apache ant - First build system for java
+2.Maven - Modern build system for java
+3.Gradle -https://gradle.org/- Modern build system for java
+...................................................................................
+			Java 11 Programming language
+...................................................................................
+
+ 1.Language fundamentals
+ 2.Object Programming  concepts and Implementation
+ 3.Exception Handling
+ 4.Collections Framework
+ 5.Concurrency and multi threading
+ 6.Database Programming using JDBC
+ 7.Functional Programming and java
+ 8.Lambda 
+
+
+1.Language fundamentals
+
+Project setup :Maven Project
+
+src/main/java
+  Here only we write code
+
+HelloWorld.java
+
+package com.ibm;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello Java!");
+    }
+}
+
+After Compilation
+HelloWorld.class
+
+Êþº¾   7 "
+  	   
+     <init> ()V Code LineNumberTable LocalVariableTable this Lcom/ibm/HelloWorld; main ([Ljava/lang/String;)V args [Ljava/lang/String; 
+SourceFile HelloWorld.java      Hello Java!    ! com/ibm/HelloWorld java/lang/Object java/lang/System out Ljava/io/PrintStream; java/io/PrintStream println (Ljava/lang/String;)V !            	   /     *· ±    
+                 
+   	    	   7     	² ¶ ±    
+   
+              	          
+
+
+We have to run?
+java HelloWorld
+
+Modularity:
+
+  breaking the code into files and folders, and organized based on some standards
+  In java modularity is implemented via packages.
+
+Modularity:
+
+  breaking the code into files and folders, and organized based on some standards
+  In java modularity is implemented via packages.
+
+What is Package?
+
+  logical and physical organization of java source and compiled code into folders and files.
+   
+  package is collection of classes and sub packages.
+
+Every java class must begin with package.
+
+package packagename
+
+if there is no package statement, then it uses default package, but it is not recommended.
+
+
+How to introduce package?
+
+package com.ibm.core
+
+as soon as if you introduce package, java compiler creates folder in the filesystem
+
+>javaapps\src\main\java\com\ibm\core
+
+Types of packages:
+
+1.java built in packages
+  java language offers lot of packages which provides api to write java application
+java language package starts with
+ java.lang
+ java.util
+ java.net
+ javax.xml
+Note: java and javax cant be used for our own packages -  Reserved packages
+
+2.custom packages
+  Packages created for project specific.
+
+custom packages starts with
+com.
+org.
+Why it starts with com and org?
+ =>It is standard way of defining packages. - Coding standards
+
+com - means company
+org - organization
+
+any commerical projects starts with "com", where as any open source projects starts "org"
+
+com                 .ibm      .core
+ |                     |            |
+commerical project  company Name  Project module
+
+com.ibm.hr.    admin;
+             |       |
+         main module submodule
+
+org.apache.tomcat.server
+
+
+3.Third party packages
+   
+ Packages distributed by thrid parties, so that we can use those packages in our applications
+
+frameworks and libs are examples of third party
+
+ spring framework - org.spring
+ junit-- org.junit
+ mockito -org.mockito
+etc...  
+
+
+Language fundamentals:
+
+1.data types,variables and literals
+
+Data types:
+
+ Java is strongly typed/static typed programming language.
+ The type of variable is decided during compile time.
+
+Data types classification:
+
+1.primitive data types
+2.reference data types/Object types
+
+1.primitive data types
+
+numbers
+ byte,short,int,long -  whole number
+Each data type has its own size.
+
+byte:
+ The byte data type is an 8-bit signed two's complement integer. It has a minimum value of -128 and a maximum value of 127 (inclusive) 
+
+short: The short data type is a 16-bit signed two's complement integer. It has a minimum value of -32,768 and a maximum value of 32,767 (inclusive)
+
+int: By default, the int data type is a 32-bit signed two's complement integer, which has a minimum value of -231 and a maximum value of 231-1.
+
+long: The long data type is a 64-bit two's complement integer. The signed long has a minimum value of -263 and a maximum value of 263-1
+
+float,double -  precision values
+
+float: The float data type is a single-precision 32-bit IEEE 754 floating point.
+double: The double data type is a double-precision 64-bit IEEE 754 floating point
+
+chars 
+ char 
+The char data type is a single 16-bit Unicode character.
+
+boolean
+  The boolean data type has only two possible values: true and false. This data type represents one bit of information, but its "size" isn't something that's precisely defined.
+
+
+2.Rerference types
+  Size of reference types cant be fixed, collection of other types, which is calculated dynamically.
+
+Object types
+String - collection of character
+
+package com.ibm;
+
+public class PrimitiveDataType {
+    public static void main(String[] args) {
+        //numbers
+        byte b = 10;
+        short s = 10;
+        int a = 10; //type variable=value
+        long lng = 100;
+        //precision values
+        float price = 10.5f;
+        double stock = 90.89;
+        //char
+        char gender = 'M';
+        //boolean
+        boolean isValid = true;
+
+        System.out.println("Byte b" + b);
+        System.out.println("Short s" + s);
+        System.out.println("Int a" + a);
+        System.out.println("Long lng" + lng);
+        System.out.println("Float price" + price);
+        System.out.println("Double Stock " + stock);
+
+        System.out.println("Char Gender " + gender);
+        System.out.println("Boolean isValid  " + isValid);
+
+
+    }
+}
+..
+Variables:
+  Place holder which holds/refers the literals
+variables can store prmiitive values or reference values(objects).
+
+Variables are classified into various category:
+
+1.local variables and args variables
+  Variables are declared with any type(primitive/reference), with in method
+2.instance variables
+   variables are declared inside class
+   instance variables can be any type (primitive/reference)
+3.static variables 
+    Variables are declared inside class with static keyword
+   instance variables can be any type (primitive/reference
+......................................................................................
+
+Reference Types: string
+package com.ibm;
+
+public class ReferenceTypeStrings {
+    public static void main(String[] args) {
+        //Strings
+        String firstName = "Subramanian";
+        System.out.println(firstName);
+    }
+}
+................................................................................
+				 Operators
+..............................................................................................
+
+Most of the Operators are dervied from c / c++ :
+.................................................
+
+The Arithmetic Operators
++	Additive operator (also used for String concatenation)
+-	Subtraction operator
+*	Multiplication operator
+/	Division operator
+%	Remainder operator
+
+
+........
+The Unary Operators
+   single operand.
+ ++
+The binary operators
+   two operand
+  a + b
+
++	Unary plus operator; indicates positive value (numbers are positive without this, however)
+-	Unary minus operator; negates an expression
+++	Increment operator; increments a value by 1
+--	Decrement operator; decrements a value by 1
+!	Logical complement operator; inverts the value of a boolean
+
+package com.ibm;
+
+public class UnaryOperators {
+    public static void main(String[] args) {
+        //unary operators
+        int result = +1;
+        // result is now 1
+        System.out.println(result);
+
+        result--;
+        // result is now 0
+        System.out.println(result);
+
+        result++;
+        // result is now 1
+        System.out.println(result);
+
+        result = -result;
+        // result is now -1
+        System.out.println(result);
+
+        boolean success = false;
+        // false
+        System.out.println(success);
+        // true
+        System.out.println(!success);
+    }
+}
+package com.ibm;
+
+public class RelationalOperators {
+    public static void main(String[] args) {
+        int value1 = 1;
+        int value2 = 2;
+        if(value1package com.ibm;
+
+public class ConditionalOperators {
+    public static void main(String[] args) {
+        int value1 = 1;
+        int value2 = 2;
+        if ((value1 == 1) && (value2 == 2))
+            System.out.println("value1 is 1 AND value2 is 2");
+        if ((value1 == 1) || (value2 == 1))
+            System.out.println("value1 is 1 OR value2 is 1");
+        //tenary opertor
+        boolean someCondition = true;
+        String result = someCondition ? "Hello" : "How are you?";
+
+        System.out.println(result);
+
+    }
+}
+ == value2)
+            System.out.println("value1 == value2");
+        if(value1 != value2)
+            System.out.println("value1 != value2");
+        if(value1 > value2)
+            System.out.println("value1 > value2");
+        if(value1 < value2)
+            System.out.println("value1 < value2");
+        if(value1 <= value2)
+            System.out.println("value1 <= value2");
+    }
+}
+.....................................................................................
+.............................................................................................
+				 Other operators
+
+1.new Operator -  memory allocation operator
+2.instanceof operator - type verification operator
+.....................................................................................
+Expressions, Statements, and Blocks,Control Statements:
+.......................................................
+
+Expression:
+ An expression is a construct made up of variables, operators, and method invocations, which are constructed according to the syntax of the language, that evaluates to a single value
+
+eg:
+   int result = 10 *10(expression)
+   int result  = calculate();
+
+Statements:
+ Statements are roughly equivalent to sentences in natural languages. A statement forms a complete unit of execution. 
+
+1.Assignment expressions
+2.Any use of ++ or --
+3.Method invocations
+4.Object creation expressions
+
+// assignment statement
+aValue = 8933.234;
+// increment statement
+aValue++;
+// method invocation statement
+System.out.println("Hello World!");
+// object creation statement
+Bicycle myBike = new Bicycle();
+
+Blocks:
+A block is a group of zero or more statements between balanced braces and can be used anywhere a single statement is allowed.
+
+if(condition) {
+  //block
+}
+//instance block
+
+class A {
+   
+   {}
+  
+}
+//static block
+class A {
+   static {}
+  
+}
+.....................................................................................
+Decision Making:
+
+The if-then and if-then-else ,if--elseif---else Statements
+
+The if-then Statement without else statement:
+
+
+package com.ibm;
+
+public class DecisionMaking {
+    public static void main(String[] args) {
+        boolean isMoving = true;
+//        if (isMoving) {
+//            System.out.println("Moving...");
+//        }
+        if (isMoving) System.out.println("Moving...");
+
+        //if...else
+        isMoving = false;
+        if (isMoving) {
+            System.out.println("Moving...");
+        } else {
+            System.err.println("The bicycle has already stopped!");
+        }
+        int testscore = 76;
+        char grade;
+
+        if (testscore >= 90) {
+            grade = 'A';
+        } else if (testscore >= 80) {
+            grade = 'B';
+        } else if (testscore >= 70) {
+            grade = 'C';
+        } else if (testscore >= 60) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+        System.out.println("Grade = " + grade);
+
+    }
+}
+Switch ...case:
+  Unlike if-then and if-then-else statements, the switch statement can have a number of possible execution paths. 
+A switch works with the byte, short, char, and int primitive data types,even enums also
+package com.ibm;
+
+public class SwitchCase {
+    public static void main(String[] args) {
+        //
+        int month = 8;
+        String monthString;
+        switch (month) {
+            case 1:  monthString = "January";
+                break;
+            case 2:  monthString = "February";
+                break;
+            case 3:  monthString = "March";
+                break;
+            case 4:  monthString = "April";
+                break;
+            case 5:  monthString = "May";
+                break;
+            case 6:  monthString = "June";
+                break;
+            case 7:  monthString = "July";
+                break;
+            case 8:  monthString = "August";
+                break;
+            case 9:  monthString = "September";
+                break;
+            case 10: monthString = "October";
+                break;
+            case 11: monthString = "November";
+                break;
+            case 12: monthString = "December";
+                break;
+            default: monthString = "Invalid month";
+                break;
+        }
+        System.out.println(monthString);
+    }
+}
+.....................................................................................
+				Loops:
+...................................................................................
+1.for 
+  regular for.
+  for..in loop
+2.while
+3.do..while
+
+package com.ibm;
+
+public class Loops {
+    public static void main(String[] args) {
+        for (int i = 1; i < 11; i++) {
+            System.out.println("Count is: " + i);
+        }
+
+        int count = 1;
+        while (count < 11) {
+            System.out.println("Count is: " + count);
+            count++;
+        }
+        //do...while
+        int counter = 1;
+        do {
+            System.out.println("Count is: " + counter);
+            counter++;
+        } while (counter < 11);
+    }
+}
+.....................................................................................
+			     Object oriented Programming and Implementation
+.....................................................................................
+What is Object orientation?
+  It is way of building applications.
+  It is style of writing code.
+
+Every pl follows different styles of writing code.
+
+Styles:
+
+1.Object oriented 
+2.Functional Oriented
+3.Event driven
+4.Produral style
+etc.....
+
+What is Object orientation?
+  It is way of building applications.
+  It is style of writing code.
+  It was introduced in 1960, became popular in 1970 ,C++.
+  The language which follows the object orientation called "Object oriented programming   language"
+Object oriented Programming langugages
+
+1.C++
+2.Java
+3.C#
+etc....
+What is Object?
+   "Every thing in this universe Object but which should be relvant to the Problem Domain/Space".
+
+Eg:
+   I am doctor, according to the doctor brian cell is object, but as a normal person 
+ we dont understand about brain cell, we have not seen that.
+ 
+As object oriented developer, we represent objects in the software domain as it is.
+
+Object contains three things
+
+1.state - information associated with object
+2.behaviour -  methods which change the information
+3.identity - to identify the object uniquly
+
+..............................................................................................
+			Objects and software systems
+
+Software intention is to store information(data),process them,produce them.
+
+Software design is all about how we capture the information/data, how to represent them.
+
+Programming lanugages capture data, organize them, process them.
+
+Programming language follows object models , which captures the data as it is in the real world.
+
+When we capture and represent the data, we need classification. "class" -  class is core concept which capture data,how to process them.
+.....................................................................................
+
+Object oriented Concepts/principles:
+....................................
+
+1.Abstraction
+2.Encapsulation
+3.Hierarchy
+    inheritance
+    has-a -composition
+4.Typing
+   polymorphism
+5.Modularity
+6.Concurrency
+7.Persistency
+
+The language which implements these 7 principles called object oriented programming langugage.
+
+Java has implemented all these principles.
+...................................................................................
+
+............................................................................................
+				 Object Modeling Process
+............................................................................................
+
+Object oriented Anys and design
+
+Steps :
+
+1.Identify objects in the realtime/problem Domain. 
+ eg:Banking
+          Customer,Account,Loan,Employee.....
+
+
+2.Appling Abstraction
+   Abstraction is nothing but take necessary details from the problem domain,give up unncessary details.
+ eg:
+ if you go to hospital, you are now patient, now hostipal need collect only health related information not your educational details,not your personal information.
+
+How to apply abstraction in code(java)?
+ class
+
+java syntax;
+
+ public | package class ObjectName {
+    //data - via variables with types
+    //behaviour - how to change the data
+    //identity  - special variable to identitfy the object
+ }
+
+What is object?
+
+ There are two views
+
+1.In the Problem domain
+     Customer,Account,Employee
+2.In the Program domain
+     Object is other wise called as "instance".
+   Object represent memory.
+   Object means collection of variabl's memory.
+
+  Type(className) variableName(pointer to memory address-reference)= new ClassName(); //instance /object creation
+.....................................................................................
+			class vs object
+
+
+class is blue print which captures realtime object information(state +behaviour)
+class is compile time container which caputures data.
+
+Object:
+  An instance of class
+  Runtime of Representation of class
+
+Patient.java
+
+class Patient{}
+
+
+Object creation
+	Reference variable
+	  |
+Patient patient=new Patient()
+ |			
+Reference Data type
+
+new is keyword to represent memory allocation
+Patient() - constructor call
+
+
+state : variables - instance variables 
+variables can be of any type.
+
+
+package com.ibm.oo;
+
+public class Employee {
+    //state + behaviour
+    //state
+    int id =1;
+    String name="Subramanian";
+    String city="Coimbatore";
+    double salary=1000.89;
+    boolean status=true;
+}
+package com.ibm.oo;
+
+public class ObjectCreationMain {
+    public static void main(String[] args) {
+        //Create Object
+        //employee is variable which type is Employee so this variable called reference variable
+        //Employee is type which is Reference type
+        //new is memory allocation operator
+        //Employee() is constructor call , which initiates to allocate memory
+        Employee employee = new Employee();
+        System.out.println(employee.id);
+        System.out.println(employee.name);
+        System.out.println(employee.city);
+        System.out.println(employee.salary);
+        System.out.println(employee.status);
+    }
+}
+...................................................................................
+				Behahaviours
+...................................................................................
+
+.............................................................................................
+				 Object Behaviour
+..............................................................................................
+
+What is method?
+
+method is nothing but unit of computation.
+Which performes computation.
+Which mutates(change) the state(updating the variable value).
+
+syntax:
+
+ AccessModifer | nonAccessModifer ReturnType methodName(arg){
+  //method body
+  //return statement
+}
+
+package com.ibm.oo;
+
+public class Car {
+    //state
+    int speed = 0;
+    int gear = 0;
+
+    //role of methods are to change the state variable
+    void start() {
+        //mutation changing
+        speed = 5;
+    }
+    void changeGear(int gear) {
+        this.gear = gear;
+        switch (this.gear) {
+            case 1:
+                System.out.println("Pressing escalator ");
+                speed = 10;
+                break;
+            case 2:
+                System.out.println("Pressing escalator ");
+                speed = 20;
+                break;
+            case 3:
+                System.out.println("Pressing escalator ");
+                speed = 30;
+                break;
+            case 4:
+                System.out.println("Pressing escalator ");
+                speed = 40;
+                break;
+            case 5:
+                System.out.println("Pressing escalator ");
+                speed = 60;
+                break;
+            default:
+                System.out.println("Reverse ");
+                speed = 10;
+                break;
+
+        }
+    }
+}
+package com.ibm.oo;
+
+public class BehaviourMain {
+    public static void main(String[] args) {
+        Car car = new Car();
+        System.out.println("Inital Speed " + car.speed);
+        //method call
+        car.start();
+        System.out.println("After Engine Start Speed is " + car.speed);
+        //
+        car.changeGear(1);
+        System.out.println("After Changing Gear, Speed is  " + car.speed);
+        car.changeGear(2);
+        System.out.println("After Changing Gear, Speed is  " + car.speed);
+
+    }
+}
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
