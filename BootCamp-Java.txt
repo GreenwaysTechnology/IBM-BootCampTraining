@@ -1306,6 +1306,540 @@ public class ProductServiceMain {
 .....................................................................................
 Hiearchy: code sharing , How to avoid duplicate code?
 
+has-a
+  dependancy injection.
+
+package com.ibm.hasa;
+
+public class Address {
+    //address
+    private String city;
+    private String state;
+
+    public Address() {
+    }
+
+    public Address(String city, String state) {
+        this.city = city;
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+}
+package com.ibm.hasa;
+
+public class Employee {
+    private  int id;
+    private String name;
+
+    public Employee() {
+    }
+
+    public Employee(int id, String name, Address address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+
+    //link the address
+    //has-a
+    private Address address;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+}
+
+
+
+
+package com.ibm.hasa;
+
+public class ProductService {
+
+    public String getProduct(){
+        return "Product";
+    }
+}
+package com.ibm.hasa;
+
+public class HasAMain {
+    public static void main(String[] args) {
+        Address address = new Address("Coimbatore", "TN");
+        Employee employee = new Employee(1, "Subramanian", address);
+        System.out.println(employee.getId());
+        System.out.println(employee.getName());
+        System.out.println(employee.getAddress().getCity() + " " + employee.getAddress().getState());
+
+
+        ProductController productController = new ProductController(new ProductService());
+        System.out.println(productController.getProductService().getProduct());
+    }
+}
+.....................................................................................
+                               is-a - inheritance
+
+
+1.class based 
+2.interface based
+3.abstract class
+
+
+package com.ibm.isa;
+
+public class Account {
+    public double deposit(){
+        return 0.0;
+    }
+}
+package com.ibm.isa;
+
+public class SavingsAccount extends Account{
+    //spcific method to savings account
+    public double calculate(){
+        return 100;
+    }
+}
+package com.ibm.isa;
+
+public class InheritanceMain {
+    public static void main(String[] args) {
+        SavingsAccount savingsAccount =new SavingsAccount();
+        System.out.println(savingsAccount.calculate());
+        System.out.println(savingsAccount.deposit());
+    }
+}
+.....................................................................................
+			Typing - Polymorphism........
+....................................................................................
+
+There are two types of polymorphism
+1.compile time polymorphism
+   -overloading
+
+overloading types
+1.method overloading
+2.constructor overloading
+
+compile time polymorphism is implemented inside class only.
+ having same method/constructor , doing different functinality.
+
+package com.ibm.poly.overloading;
+
+package com.ibm.poly.overloading;
+
+public class Calculator {
+
+    private int x;
+    private int y;
+    private int z;
+
+    //constructor overloading : having many constructors with different set of args
+
+    public Calculator() {
+    }
+
+    public Calculator(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Calculator(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    //req : sum
+    //without overloading
+    public int addTwoNum(int a, int b) {
+        return a + b;
+    }
+
+    public int addThreeNum(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    //with overloaing
+    public int sum(int a, int b) {
+        return a + b;
+    }
+
+    public int sum(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+package com.ibm.poly.overloading;
+
+public class OverloadingMain {
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator();
+        System.out.println(calculator.addTwoNum(13, 45));
+        System.out.println(calculator.addThreeNum(12, 3, 4));
+        System.out.println(calculator.sum(11, 100));
+        System.out.println(calculator.sum(34, 90, 90));
+        calculator = new Calculator(23, 90);
+        calculator = new Calculator(78, 9, 0);
+    }
+}
+
+
+2.run time polymorphism
+  -overriding
+    we can override methods across in the inheritance only.
+Parent class defines one method, we have to define the same method with same arg,
+but return type may be different,access modifer differ.
+
+package com.ibm.poly.overloading;
+
+public class Account {
+    public double deposit(double amount) {
+        System.out.println("Account");
+        return amount * 0;
+    }
+}
+
+
+package com.ibm.poly.overloading;
+
+public class SavingsAccount extends  Account{
+    //overriding
+    public double deposit(double amount) {
+        System.out.println("Savings Account");
+        return amount * 10;
+    }
+}
+
+package com.ibm.poly.overloading;
+
+
+public class Overriding {
+    public static void main(String[] args) {
+        SavingsAccount savingsAccount = new SavingsAccount();
+        System.out.println(savingsAccount.deposit(1000.89));
+    }
+}
+
+...................................................................................
+			How inheritance is happing
+
+Source code
+
+Account.java
+package com.ibm.poly.overloading;
+
+public class Account {
+    public double deposit(double amount) {
+        System.out.println("Account");
+        return amount * 0;
+    }
+}
+package com.ibm.poly.overloading;
+
+SavingsAccount.java
+public class SavingsAccount extends  Account{
+
+}
+public class Overriding {
+    public static void main(String[] args) {
+        SavingsAccount savingsAccount = new SavingsAccount();
+        System.out.println(savingsAccount.deposit(1000.89));
+    }
+}
+
+Output :
+Account
+0.0
+
+After compilation;
+
+Account.class
+
+package com.ibm.poly.overloading;
+
+public class Account extends Object {
+    public double deposit(double amount) {
+        System.out.println("Account");
+        return amount * 0;
+    }
+}
+package com.ibm.poly.overloading;
+
+SavingsAccount.class
+
+
+public class SavingsAccount extends  Account{
+    public double deposit(double amount) {
+    	  return super.deposit(amount)    
+    }
+}
+public class Overriding {
+    public static void main(String[] args) {
+        SavingsAccount savingsAccount = new SavingsAccount();
+        System.out.println(savingsAccount.deposit(1000.89));
+    }
+}
+....................................................................................
+			 Program to Super Type
+....................................................................................
+
+
+Types in java is classified into two
+
+primitives
+ int,float
+Reference types 
+ Object types
+
+Employee emp;
+
+The reference variable can have the following type
+
+The concrete type
+  SavingsAccount savingsAccount = new SavingsAccount();
+     |             |                      |
+  Type             Reference Variable   constructor
+
+The type of variable can be changed from concrete to super type
+
+ Account savingsAccount = new SavingsAccount();
+ 
+The type of reference variable can be Super class Typle
+
+
+package com.ibm.poly.supertype;
+
+public class Animal {
+    public String eat(){
+        return "Animal eats";
+    }
+}
+package com.ibm.poly.supertype;
+
+public class Tiger extends  Animal{
+  //
+    public String hunt(){
+        return "Hunt";
+    }
+}
+package com.ibm.poly.supertype;
+
+public class SupertypeMain {
+    public static void main(String[] args) {
+        Tiger tiger = new Tiger();
+        System.out.println(tiger.eat());
+        System.out.println(tiger.hunt());
+
+        //program to super type
+        Animal tiger1= new Tiger();
+        System.out.println(tiger1.eat());
+        //System.out.println(tiger1.hunt());
+    }
+}
+.....................................................................................
+
+Java applies some rules:
+
+ During compile time the variable(tiger) binding with methods(eat) always looks the type(Tiger)
+ Tiger tiger = new Tiger();
+ tiger.eat()
+ 
+  Animal tiger1= new Tiger();
+        System.out.println(tiger1.eat());
+        //System.out.println(tiger1.hunt());
+
+ here hunt does not belong to Animal type, so we cant compile
+
+Solution:
+  1.We have do type conversion/casting - down casting
+
+package com.ibm.poly.supertype;
+
+public class SupertypeMain {
+    public static void main(String[] args) {
+        Tiger tiger = new Tiger();
+        System.out.println(tiger.eat());
+        System.out.println(tiger.hunt());
+
+        //program to super type
+        Animal animal = new Tiger();
+        System.out.println(animal.eat());
+        //System.out.println(animal.hunt());
+        //casting - down casting
+        Tiger tmpTiger = (Tiger) animal;
+        System.out.println(tmpTiger.hunt());
+    }
+}
+.....................................................................................
+				interfaces
+....................................................................................
+
+inheritance is used to reuse code across the family of classes.
+
+classes are used to share code in the same family.
+
+interfaces are similar to classes but it can be used to share behaviour across the family of classes.
+
+interface is similar to class having 
+
+1.abstract methods- methods do have implmentation
+2.default concrete methods
+
+package com.ibm.isa.interfaces;
+
+public interface Flyable {
+    //abstract method
+    String fly();
+}
+package com.ibm.isa.interfaces;
+
+public class Bird implements Flyable {
+    @Override
+    public String fly() {
+        return "Bird Flies";
+    }
+}
+package com.ibm.isa.interfaces;
+
+public class Flight implements Flyable {
+    @Override
+    public String fly() {
+        return "Flight flies";
+    }
+}
+package com.ibm.isa.interfaces;
+
+public class InterfaceMain {
+    public static void main(String[] args) {
+        Flyable flyable = new Flight();
+        System.out.println(flyable.fly());
+        //
+        flyable = new Bird();
+        System.out.println(flyable.fly());
+    }
+}
+....................................................................................
+			 Abstract classes
+...................................................................................
+
+Abstract class = interface + concret class
+
+
+package com.ibm.isa.abscls;
+
+abstract public class Animal {
+    //abstract methods
+    abstract void eat();
+
+    //non abstract methods
+    void saveAnimals() {
+        System.out.println("Save Animals from the hunting");
+    }
+}
+package com.ibm.isa.abscls;
+
+abstract public class Animal {
+    //abstract methods
+    abstract void eat();
+
+    //non abstract methods
+    void saveAnimals() {
+        System.out.println("Save Animals from the hunting");
+    }
+}
+package com.ibm.isa.abscls;
+
+public class Dog extends Animal{
+    @Override
+    void eat() {
+        System.out.println("Dog eats");
+    }
+}
+package com.ibm.isa.abscls;
+
+public class Cat extends Animal{
+    @Override
+    void eat() {
+        System.out.println("Cat eats");
+    }
+}
+package com.ibm.isa.abscls;
+
+public class AbstractMain {
+    public static void main(String[] args) {
+        Animal animal =new Cat();
+        animal.saveAnimals();
+        animal.eat();
+        Cat tmpCat = (Cat)animal;
+        tmpCat.memow();
+        animal =new Dog();
+        animal.saveAnimals();
+        animal.eat();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
