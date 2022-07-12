@@ -865,6 +865,474 @@ public class BehaviourMain {
 
     }
 }
+..............................................................................................
+				Types of Methods
+.............................................................................................
+
+Based on How methods are accessed:
+
+1.instance methods
+2.static methods/class methods
+
+
+1.instance methods:
+   
+  The method declared inside class, instance methods
+  instance methods can be accessed only through "reference variable" with having objects.
+
+2.static methods
+ 
+   The method declared inside class with static keyword/modifier
+  Static methods are accessed with help of ClassName.
+............................................................................................
+				static keyword
+
+static keyword can be used with variable declaration and also method declarations.
+
+if variable declared with static , called as "class variables/static variables"
+if method is declared with static, called as "class methods/static methods"
+.....................................................................................
+
+state initalization:
+....................
+
+1.hardcoded
+2.after object creation
+3.duration object
+
+
+1.hardcoded
+  state intialized within class
+package com.ibm.oo;
+
+public class Car {
+    //state
+    int speed = 0;
+    int gear = 0;    
+}
+
+2.after object creation
+   Customer customer = new Customer();
+        System.out.println(customer.id +" " + customer.name);
+        //initialize the state after object creation
+        customer.id =100;
+        customer.name="Subramanian";
+        System.out.println(customer.id +" " + customer.name);
+
+3.during object creation
+   Using special method called "constructors"
+
+constructors are special methods used to initalize the state during object creation.
+
+
+package com.ibm.oo;
+
+public class Customer {
+
+    int id = 0;
+    String name = "";
+    //constructors
+    //constructor Name must be name of the class
+    Customer(){
+
+    }
+    //arg constructors
+    Customer(int id,String name){
+        this.id = id;
+        this.name = name;
+    }
+
+}
+package com.ibm.oo;
+
+public class CustomerMain {
+    public static void main(String[] args) {
+        //Customer - calling constructor without arg
+        Customer customer = new Customer();
+        System.out.println(customer.id +" " + customer.name);
+        //initialize the state after object creation
+        customer.id =100;
+        customer.name="Subramanian";
+        System.out.println(customer.id +" " + customer.name);
+
+        //creating instance with new constructor
+        Customer customer1 = new Customer(13,"Ram");
+        System.out.println(customer1.id +" " + customer1.name);
+
+
+
+    }
+}
+.....................................................................................
+			Coding standards
+....................................................................................
+
+File Name:
+ must be meaning full to the problem  - employee,customer
+  Employee.java
+class Name:
+ must be meaning full to the problem
+ must be noun
+ must start with capital letter
+ class Employee{}
+ in a single file we can have multiple classes without public modifier,
+ one class is recommended
+variable Names
+  instance variables : within class , belongs objects
+  camelCased
+  int id;
+  String firstName;
+
+method names;
+  
+two types of methods
+1.biz method
+   which change state according biz logic
+eg:
+void start() {
+        //mutation changing
+        speed = 5;
+    }
+    void changeGear(int gear) {
+        this.gear = gear;
+        switch (this.gear) {
+            case 1:
+                System.out.println("Pressing escalator ");
+                speed = 10;
+                break;
+            case 2:
+                System.out.println("Pressing escalator ");
+                speed = 20;
+                break;
+            case 3:
+                System.out.println("Pressing escalator ");
+                speed = 30;
+                break;
+            case 4:
+                System.out.println("Pressing escalator ");
+                speed = 40;
+                break;
+            case 5:
+                System.out.println("Pressing escalator ");
+                speed = 60;
+                break;
+            default:
+                System.out.println("Reverse ");
+                speed = 10;
+                break;
+
+        }
+    }
+2.state accessor and mutator methods - setters and getters.
+  
+coding standard for state initalization:
+
+only we can initalize the state in two ways.
+
+how to declare state?
+
+ private datatype variable; 
+
+package com.ibm.oo;
+
+public class Product {
+    //state declaration according to coding standard
+    private int id;
+    private String productName;
+    private double qty;
+    private double price;
+
+}
+
+how to access the instance variables
+
+As per coding standard, instance variable should not be accessed directly.
+
+product.id invalid
+
+via setters(initalization) and getters(reading)
+
+package com.ibm.oo;
+
+public class Product {
+    //state declaration according to coding standard
+    private int id;
+
+    private String productName;
+    private double qty;
+    private double price;
+
+    public Product() {
+    }
+
+    public Product(int id, String productName, double qty, double price) {
+        this.id = id;
+        this.productName = productName;
+        this.qty = qty;
+        this.price = price;
+    }
+
+    public double getQty() {
+        return qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty = qty;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
+
+
+    //setter : write - init
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    //getter : read
+    public int getId() {
+        return id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+}
+
+package com.ibm.oo;
+
+public class ProductMain {
+    public static void main(String[] args) {
+        Product product = new Product();
+        product.setId(1);
+        product.setProductName("Mobile");
+        product.setQty(13);
+        product.setPrice(23.76);
+        System.out.println(product.getId());
+        System.out.println(product.getProductName());
+        System.out.println(product.getQty());
+        System.out.println(product.getPrice());
+
+        product = new Product(23, "Watch", 10, 298.87);
+        System.out.println(product.getId());
+        System.out.println(product.getProductName());
+        System.out.println(product.getQty());
+        System.out.println(product.getPrice());
+    }
+}
+.....................................................................................
+			 Encapsulation
+....................................................................................
+
+How to prevent / share code with in application?
+
+code means - class ,variables,constructors,methods
+
+in java , there are keywords private,public,protected,default
+
+private keyword can be used
+with 
+1.instance variables,mehthods,constructors
+private means outside class not able access.
+
+
+package com.ibm.oo.enc;
+
+public class Employee {
+    //instance variables
+    private int id;
+
+    //private methods
+    private String generatePassword(){
+        return "Abc";
+    }
+    public String auth(){
+        return generatePassword();
+    }
+}
+package com.ibm.oo.enc;
+
+public class EmployeeMain {
+    public static void main(String[] args) {
+        Employee employee=new Employee();
+        //employee.id;
+//        System.out.println(employee.generatePassword());
+        System.out.println(employee.auth());
+//        Factory factory = new Factory();
+
+    }
+}
+.................................................................................
+			private constructors
+
+
+=> to hide object creations using new Operator
+  i dont want to do like below
+    Factory factor =new Factory();
+
+=>There is solution.
+
+package com.ibm.oo.enc;
+
+public class Factory {
+    private Factory(){
+
+    }
+    public String getInfo(){
+        return "Hello";
+    }
+    //to create instance , use static method:
+    //static methods are accessiable without object, using class Name
+    public static Factory getInstance(){
+        return new Factory();
+    }
+}
+package com.ibm.oo.enc;
+
+public class EmployeeMain {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        //employee.id;
+//        System.out.println(employee.generatePassword());
+        System.out.println(employee.auth());
+//        Factory factory = new Factory();
+        //
+        //static methods are accessed with help of Class name
+        Factory factory = Factory.getInstance();
+        System.out.println(factory.getInfo());
+
+    }
+}
+.....................................................................................
+				public 
+
+class,variables,methods,constructors can be public 
+
+public means any where in the application.
+public class Product {
+}
+package com.ibm.oo.enc;
+
+public class Product {
+    //public int id; it is valid but not recommeneded as per java standards
+
+    public Product() {
+    }
+
+    public void calculate(){
+        System.out.println("public methods");
+    }
+}
+.....................................................................................
+				default
+
+package spefic.
+
+java packages:
+.............
+1.built in package
+2.custom packages
+3.thrid packages
+
+there keywords
+
+package nameof the package
+
+package com.ibm
+package com.ibm.oo.enc
+
+import com.ibm.className
+import com.ibm.*; - to import all classes from this package.
+
+package com.ibm.services;
+
+public class ProductService {
+    public String getInfo() {
+        return "Product";
+    }
+}
+
+package com.ibm.app;
+
+import com.ibm.services.ProductService;
+
+//import com.ibm.services.*;
+
+
+public class ProductServiceMain {
+    public static void main(String[] args) {
+        ProductService productService = new ProductService();
+    }
+}
+
+default , with out any keyword
+
+class ProductService{} - package scope
+
+class ProductService {
+    public String getInfo() {
+        return "Product";
+    }
+}
+
+
+This would be error.
+
+package com.ibm.app;
+
+import com.ibm.services.ProductService;
+
+//import com.ibm.services.*;
+
+
+public class ProductServiceMain {
+    public static void main(String[] args) {
+        ProductService productService = new ProductService();
+    }
+}
+.....................................................................................
+			   protected
+.....................................................................................
+Hiearchy: code sharing , How to avoid duplicate code?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
