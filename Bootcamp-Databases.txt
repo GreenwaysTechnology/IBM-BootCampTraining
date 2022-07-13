@@ -175,22 +175,665 @@ due to this many open source projects affected, The developer who is Michael, wh
 
 Later MySQL was acquired by Oracle,Oracle would said, MySQL continue in open source only ,if you  want for cost, we can offer enterprise support.
 
-SQL basics :
+CREATE command is used to create any database objects
 
-SQL Quries are classified into three category
-
-1.DDL
-2.DML
-3.DCL/TCL
-
-Data definition Language:
-
-CREATE
-ALTER
-DROP
-TRUNCATE
-COMMENT
-RENAME
+schema,table,view,storedProcedure.....
 
 
+create table:
 
+CREATE TABLE [IF NOT EXISTS] table_name(
+   column_1_definition,
+   column_2_definition,
+   ...,
+   table_constraints
+) ENGINE=storage_engine;
+
+ The IF NOT EXISTS is optional. It allows you to check if the table that you create already exists in the database
+
+you specify a list of columns of the table in the column_list section, columns are separated by commas.
+
+Column defintions:
+
+column_name data_type(length) [NOT NULL] [DEFAULT value] [AUTO_INCREMENT] column_constraint;
+
+
+
+The column_name specifies the name of the column. 
+
+Each column has a specific data type and optional size e.g.,VARCHAR(255) 
+
+
+The  NOT NULL constraint ensures that the column will not contain NULL.
+
+Besides the NOT NULL constraint, a column may have additional constraint such as CHECK, and UNIQUE.
+
+The DEFAULT specifies a default value for the column.
+
+The AUTO_INCREMENT  indicates that the value of the column is incremented by one automatically whenever a new row is inserted into the table.
+
+Each table has a maximum one AUTO_INCREMENT column.
+
+
+After the column list, you can define table constraints such as UNIQUE, CHECK, PRIMARY KEY and FOREIGN KEY.
+
+Demo:
+
+in order to create table we need schema.
+
+How to create/drop schema
+
+CREATE SCHEMA `sapient` ;
+DROP DATABASE sapient
+
+How to know the current database?
+
+ SELECT database();
++------------+
+| database() |
++------------+
+| NULL       |
++------------+
+
+NULL means no current  database selected
+
+How to move to the current database.
+
+mysql> use sapient;
+Database changed
+mysql> SELECT database();
++------------+
+| database() |
++------------+
+| sapient    |
++------------+
+1 row in set (0.00 sec)
+
+.............................................................................................
+
+How to create table?
+
+CREATE TABLE IF NOT EXISTS tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    start_date DATE,
+    due_date DATE,
+    status TINYINT NOT NULL,
+    priority TINYINT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB;
+
+How to list how many tables are there on single database?
+
+mysql> show tables;
++-------------------+
+| Tables_in_sapient |
++-------------------+
+| tasks             |
++-------------------+
+1 row in set (0.00 sec)
+
+
+How to describe the table structure?
+
+mysql> describe tasks;
++-------------+--------------+------+-----+-------------------+-------------------+
+| Field       | Type         | Null | Key | Default           | Extra             |
++-------------+--------------+------+-----+-------------------+-------------------+
+| task_id     | int          | NO   | PRI | NULL              | auto_increment    |
+| title       | varchar(255) | NO   |     | NULL              |                   |
+| start_date  | date         | YES  |     | NULL              |                   |
+| due_date    | date         | YES  |     | NULL              |                   |
+| status      | tinyint      | NO   |     | NULL              |                   |
+| priority    | tinyint      | NO   |     | NULL              |                   |
+| description | text         | YES  |     | NULL              |                   |
+| created_at  | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------------+--------------+------+-----+-------------------+-------------------+
+
+Every column has data types?
+
+Numeric Data Types
+
+-integers
+ Integer Types (Exact Value) - INTEGER, INT, SMALLINT, TINYINT, MEDIUMINT, BIGINT
+ Fixed-Point Types (Exact Value) - DECIMAL, NUMERIC
+ Floating-Point Types (Approximate Value) - FLOAT, DOUBLE
+ Bit-Value Type - BIT
+
+Date and Time Data Types
+DATE
+TIME
+DATETIME
+TIMESTAMP
+YEAR
+
+String Data Types
+CHAR
+VARVAR(SIZE)
+BINARY
+VARBINARY 
+BLOB  - Binary large Objects - like images,videos
+TEXT  -  large descriptions like para,blogs
+
+Constraints:
+ Rules for table columns
+
+NOT Null
+UNIQUE 
+Primary Key
+Foreign Key
+Default 
+Check
+
+NOT Null:
+The NOT NULL constraint is a column constraint that ensures values stored in a column are not NULL.
+
+The syntax of defining a NOT NULL constraint is as follows:
+
+column_name data_type NOT NULL;
+
+CREATE TABLE tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE
+);
+
+DML: INSERT - to add single row into the table
+
+INSERT INTO table(c1,c2,...) VALUES (v1,v2,...);
+
+mysql> describe tasks
+    -> ;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| title      | varchar(255) | NO   |     | NULL    |                |
+| start_date | date         | NO   |     | NULL    |                |
+| end_date   | date         | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO tasks(title,start_date,end_date) VALUES('SQL Statements','2022-02-21','2022-02-21');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO tasks(title,start_date,end_date) VALUES(null,null,null);
+ERROR 1048 (23000): Column 'title' cannot be null
+mysql> INSERT INTO tasks(title) VALUES('MYSQL DB Statements');
+ERROR 1364 (HY000): Field 'start_date' doesn't have a default value
+mysql>
+............................................................................................
+
+UNIQUE Constraints:
+...................
+  in order to have unique values.
+
+There are two ways to add constriant on columns
+
+1.in the column defintion itself
+
+CREATE TABLE table_name(
+    ...,
+    column_name data_type UNIQUE,
+    ...
+);
+
+2.At end of the column list
+
+CREATE TABLE table_name(
+   ...
+   column_name1 column_definition,
+   column_name2 column_definition,
+   ...,
+   UNIQUE(column_name1,column_name2)
+);
+
+With help of constraint command
+
+[CONSTRAINT constraint_name] UNIQUE(column_list)
+
+Example :
+CREATE TABLE suppliers (
+    supplier_id INT AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(15) NOT NULL UNIQUE,
+    address VARCHAR(255) NOT NULL,
+    PRIMARY KEY (supplier_id),
+    CONSTRAINT uc_name_address UNIQUE (name , address)
+);
+ describe suppliers;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| supplier_id | int          | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(255) | NO   | MUL | NULL    |                |
+| phone       | varchar(15)  | NO   | UNI | NULL    |                |
+| address     | varchar(255) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO suppliers(name,phone,address) VALUES('abc','100','city');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO suppliers(name,phone,address) VALUES('abcd','100','scity');
+ERROR 1062 (23000): Duplicate entry '100' for key 'suppliers.phone'
+mysql>
+.............................................................................................
+
+PRIMARY Key Constriant
+
+PrimaryKey = not null + unquie
+
+
+1.A primary key must contain unique values. 
+2.If the primary key consists of multiple columns, the combination of values in these columns must be unique.
+3.A primary key column cannot have NULL values.
+4.Any attempt to insert or update NULL to primary key columns will result in an error.
+ "Note that MySQL implicitly adds a NOT NULL constraint to primary key columns."
+5.A table can have one an only one primary key.
+6.Primary keys would be mostly sno...A primary key column often has the AUTO_INCREMENT attribute that automatically generates a sequential integer whenever you insert a new row into the table.
+
+There are two ways to add constriant on columns
+
+1.in the column defintion itself
+
+
+CREATE TABLE table_name(
+    primary_key_column datatype PRIMARY KEY,
+    ...
+);
+
+2.At end of the column list
+
+CREATE TABLE table_name(
+    primary_key_column1 datatype,
+    primary_key_column2 datatype,
+    ...,
+    PRIMARY KEY(column_list)
+);
+
+eg:
+CREATE TABLE roles(
+   role_id INT AUTO_INCREMENT,
+   role_name VARCHAR(50),
+   PRIMARY KEY(role_id)
+);
+INSERT INTO roles(role_name) VALUES('Manager');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO roles(role_name) VALUES('Manager');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM roles;
++---------+-----------+
+| role_id | role_name |
++---------+-----------+
+|       1 | Manager   |
+|       2 | Manager   |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO roles(role_id,role_name) VALUES('Manager');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO roles(role_id,role_name) VALUES(2,'teamlead');
+ERROR 1062 (23000): Duplicate entry '2' for key 'roles.PRIMARY'
+mysql> INSERT INTO roles(role_id,role_name) VALUES(null,'teamlead');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM roles;
++---------+-----------+
+| role_id | role_name |
++---------+-----------+
+|       1 | Manager   |
+|       2 | Manager   |
+|       3 | teamlead  |
++---------+-----------+
+3 rows in set (0.00 sec)
+............................................................................................
+			Constriants across the tables(Related tables only)
+............................................................................................
+foreign key:
+
+  A foreign key is a column or group of columns in a table that links to a column or group of columns in another table. 
+
+The foreign key places constraints on data in the related tables, which allows MySQL to maintain "referential integrity".
+
+[CONSTRAINT constraint_name]
+FOREIGN KEY [foreign_key_name] (column_name, ...)
+REFERENCES parent_table(colunm_name,...)
+[ON DELETE reference_option]
+[ON UPDATE reference_option]
+
+MySQL has five reference options: CASCADE, SET NULL, NO ACTION, RESTRICT, and SET DEFAULT.
+
+CASCADE: if a row from the parent table is deleted or updated, the values of the matching rows in the child table automatically deleted or updated.
+
+SET NULL:  if a row from the parent table is deleted or updated, the values of the foreign key column (or columns) in the child table are set to NULL.
+
+RESTRICT:  if a row from the parent table has a matching row in the child table, MySQL rejects deleting or updating rows in the parent table.
+
+NO ACTION: is the same as RESTRICT.
+
+SET DEFAULT: is recognized by the MySQL parser. However, this action is rejected by both InnoDB and NDB tables.
+
+CREATE TABLE categories(
+    categoryId INT AUTO_INCREMENT PRIMARY KEY,
+    categoryName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE products(
+    productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+        REFERENCES categories(categoryId)
+);
+
+...
+
+INSERT INTO categories(categoryName) VALUES('Smartphone');
+
+INSERT INTO products(productName, categoryId) VALUES('iPhone',1);
+INSERT INTO products(productName, categoryId) VALUES('Samsung',4);
+
+..............................................................................................
+
+INSERT INTO categories(categoryName)
+    -> VALUES
+    ->     ('Smartphone'),
+    ->     ('Smartwatch');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO categories(categoryName) VALUES('Smartphone');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO products(productName, categoryId)
+    -> VALUES('iPhone',1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from categories;
++------------+--------------+
+| categoryId | categoryName |
++------------+--------------+
+|          1 | Smartphone   |
+|          2 | Smartwatch   |
+|          3 | Smartphone   |
++------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from products;
++-----------+-------------+------------+
+| productId | productName | categoryId |
++-----------+-------------+------------+
+|         1 | iPhone      |          1 |
++-----------+-------------+------------+
+1 row in set (0.01 sec)
+
+mysql> INSERT INTO products(productName, categoryId) VALUES('iPad',3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++-----------+-------------+------------+
+| productId | productName | categoryId |
++-----------+-------------+------------+
+|         1 | iPhone      |          1 |
+|         2 | iPad        |          3 |
++-----------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO products(productName, categoryId) VALUES('Samsung',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`sapient`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`))
+mysql>
+
+Parent table update:
+
+UPDATE categories SET categoryId = 100 WHERE categoryId = 1;
+
+..............................................................................................
+				Reference Options
+.............................................................................................
+
+CREATE TABLE products(productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT NOT NULL,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+    REFERENCES categories(categoryId)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+ INSERT INTO products(productName, categoryId)VALUES ('iPhone', 1), ('Galaxy Note',1),('Apple Watch',2),('Samsung Galary Watch',2);
+
+Now update the Parent table:
+ UPDATE categories SET categoryId = 100 WHERE categoryId = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from categories;
++------------+--------------+
+| categoryId | categoryName |
++------------+--------------+
+|          2 | Smartwatch   |
+|        100 | Smartphone   |
++------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from products;
++-----------+----------------------+------------+
+| productId | productName          | categoryId |
++-----------+----------------------+------------+
+|         1 | iPhone               |        100 |
+|         2 | Galaxy Note          |        100 |
+|         3 | Apple Watch          |          2 |
+|         4 | Samsung Galary Watch |          2 |
++-----------+----------------------+------------+
+4 rows in set (0.00 sec)
+
+When you delete a row, what will happen when casecade is on.
+ DELETE FROM categories where categoryId=2
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from categories;
++------------+--------------+
+| categoryId | categoryName |
++------------+--------------+
+|        100 | Smartphone   |
++------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> select * from products;
++-----------+-------------+------------+
+| productId | productName | categoryId |
++-----------+-------------+------------+
+|         1 | iPhone      |        100 |
+|         2 | Galaxy Note |        100 |
++-----------+-------------+------------+
+2 rows in set (0.00 sec)
+********************************************************************************************
+DML Statements:
+
+SELECT
+INSERT 
+UPDATE
+DELETE
+
+SELECT :
+
+Single Column:
+
+SELECT select_list FROM table_name;
+
+SELECT lastName FROM employees;
+
+Multi Column:
+
+SELECT 
+    lastName, 
+    firstName, 
+    jobTitle
+FROM
+    employees;
+
+...........................................................................................
+				SQL Clauses
+
+Used to filter data
+
+WHERE
+ORDERBY
+DISTINCT
+groupby
+having
+etc.......
+
+WHERE: 
+  USED TO select row or rows based on boolean conditions
+
+SELECT 
+    select_list
+FROM
+    table_name
+WHERE
+    search_condition;
+
+conditions can be :
+operators:
+equal
+not equal
+greater than, less than
+
+select * from products WHERE productid=1;
++-----------+-------------+------------+
+| productId | productName | categoryId |
++-----------+-------------+------------+
+|         1 | iPhone      |        100 |
++-----------+-------------+------------+
+.....................................................................................
+
+			Database objects
+
+
+1.index
+2.views
+3.storedprocedures and functions
+4.tiggers
+5.transactions
+
+index:
+ index is object used on table columns used to perform fast data reterival.
+ An index is a data structure such as B-Tree that improves the speed of data retrieval on a table at the cost of additional writes and storage to maintain it.
+
+
+how to add index?
+
+inside table definition
+
+CREATE TABLE t(
+   c1 INT PRIMARY KEY,
+   c2 INT NOT NULL,
+   c3 INT NOT NULL,
+   c4 VARCHAR(10),
+   INDEX (c2,c3) 
+);
+
+outside table definition:
+
+ CREATE INDEX index_name ON table_name (column_list)
+
+
+Views:
+
+  Views are like table, but can be used only query reterival.
+
+Why Views?
+
+SELECT 
+    customerName, 
+    checkNumber, 
+    paymentDate, 
+    amount
+FROM
+    customers
+INNER JOIN
+    payments USING (customerNumber);
+
+Views are used to abstract complex query operations?
+
+CREATE VIEW viewName select statement;
+
+CREATE VIEW customerPayments
+AS 
+SELECT 
+    customerName, 
+    checkNumber, 
+    paymentDate, 
+    amount
+FROM
+    customers
+INNER JOIN
+    payments USING (customerNumber);
+
+
+SELECT *FROM customerPayments.
+....................................................................................
+Triggers:
+
+In MySQL, a trigger is a stored program invoked automatically in response to an event such as insert, update, or delete that occurs in the associated table. 
+
+MySQL supports triggers that are invoked in response to the INSERT, UPDATE or DELETE event.
+
+The SQL standard defines two types of triggers:
+
+row-level triggers and statement-level triggers.
+
+A row-level trigger is activated for each row that is inserted, updated, or deleted.  For example, if a table has 100 rows inserted, updated, or deleted, the trigger is automatically invoked 100 times for the 100 rows affected.
+
+A statement-level trigger is executed once for each transaction regardless of how many rows are inserted, updated, or deleted.
+
+Advantages of triggers
+Triggers provide another way to check the integrity of data.
+Triggers handle errors from the database layer.
+Triggers give an alternative way to run scheduled tasks. By using triggers, you don’t have to wait for the scheduled events to run because the triggers are invoked automatically before or after a change is made to the data in a table.
+Triggers can be useful for auditing the data changes in tables.
+
+How to create Trigger?
+
+CREATE TRIGGER trigger_name
+{BEFORE | AFTER} {INSERT | UPDATE| DELETE }
+ON table_name FOR EACH ROW
+trigger_body;
+
+
+CREATE TABLE employees_audit (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employeeNumber INT NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    changedat DATETIME DEFAULT NULL,
+    action VARCHAR(50) DEFAULT NULL
+);
+.....................................................................................
+..............................................................................................
+				   Trancations and Locks
+..............................................................................................
+
+What is transaction?
+  A sequence of statement execution, during statement execution if something goes wrong in the middle, i dont want to continue the steps and cancel previous actions.
+
+for eg:
+  online purchase
+
+1.purchase is success, purchase table got updated
+2.payment is failed, i could not insert data in the payment table and also i have to revoke the purchase table.
+
+
+By default, transaction is disabled in databse.
+
+we need to enable transaction features.
+......................................................................................
