@@ -1,0 +1,574 @@
+				 Spring Boot
+.....................................................................................
+
+What is Spring Boot?
+
+Spring Boot is JVM framework to build distributed application.
+
+What is Spring Framework?
+ -Spring Framework makes it easy to create java Enterprise applications.
+
+Early 2000, Java Started becoming more popular in distributed application dev.
+
+Distributed Apps:
+-Monolith Apps - legacy way of building apps
+-MicroService Apps - modern way of way building apps
+
+How Java  Works? Who Provides Java Standarization?
+
+JCP - Java Community Process
+ Who standarize the entire Java Technology.
+
+Types of Java Tech
+JSE 
+  Standard Edition
+-Java Programming language
+-JVM 
+What is spec
+   Rules and regualations how things are working.
+
+What is implementation
+Product which implements specs.
+
+JVM -  Hot Spot(oracle),OpenJdk
+
+JEE -Enterprise Specification
+..............................
+JEE Platform spec : containers /app containers/tools
+
+WebTechnology spec
+ Java servlet
+ JSP
+ JSF
+ Websocket
+ JSTL
+ EL
+Enterprise Application spec
+EJB
+JPA -ORM
+JMS
+JTA
+DI
+Context and DI
+Concurrency Util
+
+Web Services
+
+SOAP based  -JAX-WS
+REST Based  -JAX-RS
+
+Management and Security technologies
+Java EE Security spec
+Java Auth
+Java authorzation
+JAVA EE additional spec
+JMX -Jmeter,Spring Actuator
+
+JME
+....
+ Building Device apps -Mobile Apps
+.............................................................................................
+                            Complixty of JEE Spec and implementation
+.............................................................................................
+
+////////////////////////////////////////////////////////////////////////////
+
+JEE enterprise application:
+............................
+
+Client Layer         Web Layer      Biz layer      Data Layer/Persistency
+
+Browser             Servlet/JSP      EJB               Entity Beans
+
+EJB :Enterprise Java Bean
+  Java Object can support distributed biz operations
+eg: incase of shopping cart
+  I have a bean(java object) which has three apis addToCart,Checkout,Payment)
+
+Api classifications:
+1.Session Bean  - to represent biz logic---jdbc--dml
+2.Enitity bean  -ORM - Object to Table mapping-First orm solution---Hibernate
+3.Message Driven Bean - Message driven systems-RabbitMQ,Kaffka,JMS
+
+
+
+Rod  was working in enterprise banking application with jee, he faced lot of complexity in designing ejb driven systems, so he decided to move ejb from JEE application, he wrote book called expert  J2EE ONE ON ONE design and development.
+
+
+
+He proposed a model  that model later on came as The project in "Spring Season" - Spring Framework.
+
+Client Layer         Web Layer      Biz layer                Data Layer/Persistency
+
+Browser             Spring MVC      Spring Services              Spring-orm - Spring-data
+
+Spring development objective is "POJO". (Plain Old Java Object)
+
+When you build enterprise java apps, no plumbing(bolier plate code),Spring framework takes care that plumbing.
+.....................................*********.......................................
+..............................................................................................
+				Enterprise application challanges
+..............................................................................................
+
+Java is Object Oriented Programming language.
+
+Apps built on java collection of objects.
+
+Object Oriented Principles:
+...........................
+
+1.Abstraction
+2.Encapsulation
+3.Hierarchy
+4.Typing
+5.Modularity
+----------------------
+6.Concurrency
+7.Persistency
+
+
+
+1.Object Management :Hierarchy
+
+Object Relationship
+
+-HAS-A -  Composition
+-IS-A - Inheritance.
+
+Enterprise application challanges:
+
+1.Object Management
+
+IOC : Inversion of Control
+ Inversion -Do opposit
+ of Control -Management
+
+In enterprise application object creation and linking objects are so complex that should be removed from the developer.
+
+Someone should take care object creation and linking= 
+  =>This process is called as IOC.
+The IOC suggest the automation program,that program called as IOC Container.
+
+The first IOC Container
+1.PICO Container
+2.Spring container : It was born as enterprise container.
+
+Spring container takes care of object creations and object linking .
+Which is other wise called as "Dependency Injection" .
+ Dependency - HAS-A
+    injection - linking objects
+
+
+Spring Application:
+   The application is written in java technology, executed on Spring Container which is runtime for spring applications.spring container runs on jvm
+
+			  Spring Application
+				 |
+			   Spring Container
+				 |
+				JVM
+....................................................................................
+
+package com.ibm.di;
+
+import java.util.List;
+
+public class ProductController {
+    //declare dependency
+    private ProductService productService;
+
+    public ProductController() {
+    }
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    public List<String> findProducts() {
+        return productService.findAllProducts();
+    }
+}
+package com.ibm.di;
+
+import java.util.List;
+
+public class ProductService {
+    private ProductRepository productRepository;
+
+    public ProductService() {
+    }
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+    //service mehtod
+    public List<String> findAllProducts(){
+        //get from repository
+        return  productRepository.findAll();
+    }
+}
+package com.ibm.di;
+
+import java.util.List;
+
+public class ProductRepository {
+
+    public List<String> findAll() {
+        return List.of("Phone", "Tv", "Books");
+    }
+}
+package com.ibm.di;
+
+
+public class App {
+    public static void main(String[] args) {
+
+        //create dependencies object
+        ProductRepository productRepository = new ProductRepository();
+        ProductService productService = new ProductService(productRepository);
+        //productService.setProductRepository(productRepository);
+        ProductController productController = new ProductController(productService);
+
+        productController.findProducts().stream().forEach(product -> {
+            System.out.println(product);
+        });
+
+    }
+}
+1.Object Management
+
+IOC : Inversion of Control
+ Inversion -Do opposit
+ of Control -Management
+
+In enterprise application object creation and linking objects are so complex that should be removed from the developer.
+
+Someone should take care object creation and linking= 
+  =>This process is called as IOC.
+The IOC suggest the automation program,that program called as IOC Container.
+
+The first IOC Container
+1.PICO Container
+2.Spring container : It was born as enterprise container.
+
+Spring container takes care of object creations and object linking .
+Which is other wise called as "Dependency Injection" .
+ Dependency - HAS-A
+    injection - linking objects
+
+Spring Application:
+   The application is written in java technology, executed on Spring Container which is runtime for spring applications.spring container runs on jvm
+
+			  Spring Application
+				 |
+			   Spring Container
+				 |
+				JVM
+...................
+
+what is framework?
+   One Stop Solution
+ Collection of tools and technologies provided in one place to build end to end applications mostly.
+  
+What spring framework offers?
+
+ Spring offers collection of many projects.
+
+Using Spring Boot	
+Build Systems, Structuring Your Code, Configuration, Spring Beans and Dependency Injection, DevTools, and more.
+
+Core Features	
+Profiles, Logging, Security, Caching, Spring Integration, Testing, and more.
+
+Web	
+Servlet Web, Reactive Web, GraphQL, Embedded Container Support, Graceful Shutdown, and more.
+
+Data	
+SQL and NOSQL data access.
+
+IO	
+Caching, Quartz Scheduler, REST clients, Sending email, Spring Web Services, and more.
+
+Messaging	
+JMS, AMQP, Apache Kafka, RSocket, WebSocket, and Spring Integration.
+
+Container Images	
+Efficient container images and Building container images with Dockerfiles and Cloud Native Buildpacks.
+
+Production-ready Features	
+Monitoring, Metrics, Auditing, and more.
+
+Deploying Spring Boot Applications	
+Deploying to the Cloud, and Installing as a Unix application.
+
+Spring Boot CLI	
+Installing the CLI, Using the CLI, Configuring the CLI, and more.
+
+Build Tool Plugins	
+Maven Plugin, Gradle Plugin, Antlib, and more.
+
+.............................................................................................
+				   Tools For Spring Application Development
+.............................................................................................
+
+1.JDK 8 - 11
+   HotSpot or OpenJDk
+2.Build Tools
+   Maven,Gradle
+3.Docker
+
+Spring Versions and features
+
+2004 - Spring Framework 1.0 released
+– Champions dependency injection
+– Encourages POJOs
+– Uses XML files to describe application
+  configuration
+– Becomes popular quickly as an EJB
+  alternative
+
+• Spring 2.0 (2006):
+ – XML simplification, async JMS, JPA, AspectJ support
+
+• Spring 2.5 (2007, last release 2.5.6)
+  – Requires Java 1.4+ and supports JUnit 4
+  – Annotation DI, @MVC controllers, XML namespaces
+
+• Spring 3.x (3.2.17 released July 2013)
+
+   – Environment & Profiles, @Cacheable, @EnableXXX …
+   – Requires Java 1.5+ and JUnit 4.7+
+   – REST support, JavaConfig, SpEL, more annotations
+
+• Spring 4.x (released Dec 2016)
+    – Support for Java 8, @Conditional, Web-sockets
+
+• Spring 5.x (2017)
+  MicroService driven Dev features
+   – Reactive programming focus
+   - Functional Programming
+   - Cloud Functionality
+   - Container support
+.....................................................................................
+
+Spring Bean is Java Object follows Bean Specification and also managemented by Spring Container.
+
+.............................................................................................
+				   Spring Bean Creation(Object)
+.............................................................................................
+
+Who creates Spring Beans?
+
+ -Spring Container
+
+ Spring container is java object, which manages object(bean) life cycle like   create,use,destroy.
+
+How spring beans are created?
+
+-> you must have bean definitions outside application biz logic
+-> sp container reads that bean definitions, initalizes the beans.
+
+Architecture:
+
+			POJO Classes(Bean)
+				 |
+    Spring-Application <====>SpringContainer
+      config file		 |
+		       Fullyconfigured System
+
+
+Spring Bean Definitions(file) instructs Spring Container how to create objects(order of creations) and how to link (DI) objects
+.....................................................................................
+			Spring Application Configuration Managment
+....................................................................................
+
+Spring Application can be configured in many ways
+
+1.XML files  -  Old and Legacy.
+
+2.Java Config + Annotations
+
+2.1 Java Config -Manual - Write Configuration and logic
+
+ Here Dev need to write Configuration and biz logic , which makes app dev slower.
+
+Just Focus logic, automate configuration itself - AutoConfig
+
+3.AutoConfig:
+    Framework must take care of configuration based on various condtions like
+ i want web and jpa , messaging.
+                        "Birth of Spring Boot"
+
+.....................................................................................
+			 Annotations
+.....................................................................................
+
+https://docs.oracle.com/javase/tutorial/java/annotations/
+
+What is Annotations?
+Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations have no direct effect on the operation of the code they annotate.
+
+Annotation is a code which is injected into another code.
+
+Annotation code can be injected 
+
+at source code level -  annotation code will be available only in source code
+@override
+
+at compile time - only uses compiler
+
+at runtime - available in compile time and runtime both
+
+Spring Project Setup 
+			    
+
+What are the required components to setup Spring Project.
+
+1.IDE,mvn,java
+
+2.Project layout
+
+
+Spring Project requires
+
+Infra Structure:
+ 1.Project libraries
+
+ 2.Project Configurations
+
+Application Structure
+
+1.Application code
+2.assets - imgs,docs
+3.App Configuration
+
+mvn or gradel
+...................................................................................
+				    Spring Project Creations
+....................................................................................
+
+Types of Spring Project
+
+1.Spring core - DI features
+2.Spring Web - 
+   Web Apps (RESTFull WebServices)
+3.Spring Data
+
+What is Rest api?
+ Rest api is api which delivers data to the web clients via http in the form of json.
+
+
+eg: Simple Bean /object creation and DI
+
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        //SpringContainer Object Reference
+        ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);
+        //Object is created by springContainer , you are getting reference only
+        Greeter greeter = context.getBean(Greeter.class);
+        System.out.println(greeter.sayGreet());
+
+        //
+        ProductService productService =context.getBean(ProductService.class);
+        System.out.println(productService.findAll());
+
+
+    }
+
+}
+package com.example.demo;
+
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Greeter {
+    public String sayGreet() {
+        return "Hello Spring!";
+    }
+}
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class ProductService {
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public List<String> findAll() {
+        return  productRepository.findAll();
+    }
+}
+package com.example.demo;
+
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class ProductRepository {
+
+    public List<String> findAll(){
+        return List.of("Java","Spring","Boot");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
