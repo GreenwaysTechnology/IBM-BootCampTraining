@@ -1811,6 +1811,1465 @@ public class AbstractMain {
         animal.eat();
     }
 }
+.....................................................................................
+				java.lang.Object
+.....................................................................................
+
+Employee.java
+class Employee {}
+
+After compilation
+
+Employee.class
+class Employee  extends java.lang.Object
+{
+
+}
+
+class Account{}
+
+class SavingsAccount extends Account{}
+
+
+class Account extends java.lang.Object {}
+
+class SavingsAccount extends Account{}
+
+
+interface Account extends java.lang.Object {}
+
+class SavingsAccount implements Account {
+
+
+}
+			 java.lang.Object
+
+Methods:
+
+1.toString()
+   It returns string representation of Object.
+if you dont override this method in any class java.lang.Object toString is method.
+
+by default toString method returns value like below
+
+com.sapient.oo.objectclass.Greeting@1d251891
+
+
+Overriding toString method and get meaningfull output
+package com.sapient.oo.objectclass;
+
+public class Greeting {
+
+    private String message;
+    private String name;
+
+    public Greeting(){
+
+    }
+
+    public Greeting(String message, String name) {
+        this.message = message;
+        this.name = name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //Override to String method
+
+    @Override
+    public String toString() {
+        return "Greeting{" +
+                "message='" + message + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+public class ObjectMain {
+    public static void main(String[] args) {
+        Greeting greeting = new Greeting("Hello","Subramanian");
+        //System.out.println(greeting.getMessage() + " " +greeting.getName());
+        //toString
+        System.out.println(greeting.toString());
+        System.out.println(greeting); //here toString is called automatically
+    }
+}
+..............................................................................................
+				hashcode()
+
+
+hashcode method returns an integer which represents hash value of the java object.
+System.out.println(greeting.hashCode());
+
+Can i override hashcode?
+
+Yes
+package com.sapient.oo.objectclass;
+
+import java.util.Objects;
+
+public class Greeting {
+
+    private String message;
+    private String name;
+
+    public Greeting(){
+
+    }
+
+    public Greeting(String message, String name) {
+        this.message = message;
+        this.name = name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //Override to String method
+
+    @Override
+    public String toString() {
+        return "Greeting{" +
+                "message='" + message + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+    //override hashcode
+//    @Override
+//    public int hashCode() {
+//        return 100;
+//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(message,name);
+    }
+}
+      package com.sapient.oo.objectclass;
+
+public class ObjectMain {
+    public static void main(String[] args) {
+        Greeting greeting = new Greeting("Hello","Subramanian");
+        System.out.println(greeting.hashCode());
+    }
+}
+..............................................................................................
+				equals Method
+..............................................................................................
+
+To test equality of objects.
+
+In order to test equality we have == operator and also we have equals Method.
+
+== Operator:
+...........
+
+With Primitive Values to test two different variables having same value or not.
+        int a = 10;
+        int b = 10;
+        if (a == b) {
+            System.out.println("Equal");
+        } else {
+            System.out.println("Not equal");
+        }
+
+With Reference types and equal operator
+
+        Greeting greeting1 = new Greeting("Hello", "Subramanian");
+        Greeting greeting2 = new Greeting("Hai", "Ram");
+
+        if (greeting1 == greeting2) {
+            System.out.println("Greetings are equal");
+        } else {
+            System.out.println("Greetings are not equal");
+        }
+
+Here we are comparing not objects but object locations.
+
+ "Whether two reference variables points the same object(one location) or not"
+
+Here no, so it will give "Greetings are not equal".
+ //Equal condition with single object
+        Greeting greeting3 = new Greeting();
+        Greeting greeting4 = greeting3;
+        if (greeting3 == greeting4) {
+            System.out.println("Greetings are equal");
+        } else {
+            System.out.println("Greetings are not equal");
+        }
+.............................................................................................
+				equals method
+.............................................................................................
+
+=>This method is used to compare objects only not its memory location.
+   
+  If i create two objects having content are same
+  eg : Two Employee objects having same employeeid.
+
+
+
+package com.sapient.oo.objectclass;
+
+import java.util.Objects;
+
+public class Greeting {
+
+    private int id;
+    private String message;
+    private String name;
+
+    public Greeting(){
+
+    }
+
+    public Greeting(int id,String message, String name) {
+        this.id =id;
+        this.message = message;
+        this.name = name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //Override to String method
+
+    @Override
+    public String toString() {
+        return "Greeting{" +
+                "message='" + message + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Greeting)) return false;
+        Greeting greeting = (Greeting) o;
+        return id == greeting.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
+
+package com.sapient.oo.objectclass;
+public class EqualsMethodMain {
+    public static void main(String[] args) {
+        Greeting greeting1 = new Greeting(1,"Hello","Subramanian");
+        Greeting greeting2 = new Greeting(6,"Hello","Subramanian");
+        System.out.println("Greeting 1 Hashcode " + greeting1.hashCode());
+        System.out.println("Greeting 2 Hashcode " + greeting2.hashCode());
+
+        //by default equals method test object reference equality using == operator
+        System.out.println(greeting1.equals(greeting2) ? "Objects are equal" : "Objects are not equal");
+
+    }
+}
+.....................................................................................
+			 Exception Handling
+.....................................................................................
+
+Types of Exception:
+1.unChecked
+   you dont need to write any special code to handle the errors
+
+eg:
+ NullPointerException
+ NumberformateException
+
+2.Checked
+   We have to write special code to handle the errors other wise it will not compile
+
+.............................................................................................
+				   Exception handling
+.............................................................................................
+In software systems errors are common, which is unavoidable.
+
+Types of errors:
+
+1.Program errors
+   ->compile time errors
+      Errors are identified during development time
+    compile time errors are not danger,because can be fixed
+
+   ->Runtime errors 
+      Errors are identified during runtime of application.
+      Errors are danager which stops the application to run.
+      This is unavoiable
+      This has to be handled properly    
+        Handling runtime errors are called "exception handling"
+
+2.System errors
+    Due to system mal function like , sudden machine restarts,disk failure,io devices failures,memory overflow.
+    We cant fix / handle this via software
+
+How to handle Exception(Application Runtime errors)?
+
+java provides a mechanism to handle errors sommothly.
+
+if you dont write error handling code, java will do automatically.
+.............................................................................................
+				Handling exceptions
+
+
+java provides keywords to handle exception
+
+1.try...catch..finally
+2.throw 
+3.throws 
+
+Exception is Object oriented, java provides a base class to abstract exception.
+
+				java.lang.Throwable
+
+The Throwable class is the superclass of all errors and exceptions in the Java language
+Only objects that are instances of this class (or one of its subclasses) are thrown by the Java Virtual Machine or can be thrown by the Java throw statement
+
+
+				java.lang.Throwable
+					 |
+		---------------------------------------------------------
+                |							|
+             java.lang.Error                                     java.lang.Exception
+
+
+
+
+Error:
+   An Error is a subclass of Throwable that indicates serious problems that a reasonable application should not try to catch.
+Most such errors are abnormal conditions. The ThreadDeath error, though a "normal" condition, is also a subclass of Error because most applications should not try to catch it.
+
+Exception:
+  The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch.
+
+............................................................................................
+				 Types of Exception
+............................................................................................
+
+1.UnChecked Exception
+
+    Exceptions need not be handled by write special code(try...catch).
+    what if exceptions occured, JVM will handle auotmatically.
+
+Eg;
+   NullPointerException
+       Exception(error) , is thrown by the jvm incase if you access object properties , if object does not exit.
+
+  static void checkNullException() {
+        String str = null;
+        System.out.println(str.length());
+    }
+  NumberFormatException
+     Incase string to number conversion, if it fails
+    static  void checkNumberFormate(){
+        String str = "$10";
+        int a = Integer.parseInt(str);
+        System.out.println(a);
+    }
+etc...
+
+How to identify the unchecked Exception?
+			
+ if any exception inherits "java.lang.RuntimeException" or any Exception subclass of RuntimeException are called "UnChecked Exception"
+
+
+How to handle Unchecked Exception?
+  Handling means reporting errors.
+
+try....catch block
+static void handleException() {
+        try {
+            //your application
+            String str = "$10";
+            int a = Integer.parseInt(str);
+            System.out.println(a);
+        } catch (NumberFormatException es) {
+            //reporting block
+            System.out.println(es.getMessage());
+        }
+
+    }
+
+2.Checked Exception
+    Exceptions need to be handled by writing code using try...catch or throws.
+    The code which throws CheckedException, without handling using try...catch or throws , we cant compile the code.
+
+CheckedException is used in many java apis
+
+1.java.io apis
+2.java.sql apis
+3.java.net apis
+etc.....
+.................................................................................
+.............................................................................................
+				   Exception handling
+.............................................................................................
+In software systems errors are common, which is unavoidable.
+
+Types of errors:
+
+1.Program errors
+   ->compile time errors
+      Errors are identified during development time
+    compile time errors are not danger,because can be fixed
+
+   ->Runtime errors 
+      Errors are identified during runtime of application.
+      Errors are danager which stops the application to run.
+      This is unavoiable
+      This has to be handled properly    
+        Handling runtime errors are called "exception handling"
+
+2.System errors
+    Due to system mal function like , sudden machine restarts,disk failure,io devices failures,memory overflow.
+    We cant fix / handle this via software
+
+How to handle Exception(Application Runtime errors)?
+
+java provides a mechanism to handle errors sommothly.
+
+if you dont write error handling code, java will do automatically.
+.............................................................................................
+				Handling exceptions
+
+
+java provides keywords to handle exception
+
+1.try...catch..finally
+2.throw 
+3.throws 
+
+Exception is Object oriented, java provides a base class to abstract exception.
+
+				java.lang.Throwable
+
+The Throwable class is the superclass of all errors and exceptions in the Java language
+Only objects that are instances of this class (or one of its subclasses) are thrown by the Java Virtual Machine or can be thrown by the Java throw statement
+
+
+				java.lang.Throwable
+					 |
+		---------------------------------------------------------
+                |							|
+             java.lang.Error                                     java.lang.Exception
+
+
+
+
+Error:
+   An Error is a subclass of Throwable that indicates serious problems that a reasonable application should not try to catch.
+Most such errors are abnormal conditions. The ThreadDeath error, though a "normal" condition, is also a subclass of Error because most applications should not try to catch it.
+
+Exception:
+  The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch.
+
+............................................................................................
+				 Types of Exception
+............................................................................................
+
+1.UnChecked Exception
+
+    Exceptions need not be handled by write special code(try...catch).
+    what if exceptions occured, JVM will handle auotmatically.
+
+Eg;
+   NullPointerException
+       Exception(error) , is thrown by the jvm incase if you access object properties , if object does not exit.
+
+  static void checkNullException() {
+        String str = null;
+        System.out.println(str.length());
+    }
+  NumberFormatException
+     Incase string to number conversion, if it fails
+    static  void checkNumberFormate(){
+        String str = "$10";
+        int a = Integer.parseInt(str);
+        System.out.println(a);
+    }
+etc...
+
+How to identify the unchecked Exception?
+			
+ if any exception inherits "java.lang.RuntimeException" or any Exception subclass of RuntimeException are called "UnChecked Exception"
+
+
+How to handle Unchecked Exception?
+  Handling means reporting errors.
+
+try....catch block
+static void handleException() {
+        try {
+            //your application
+            String str = "$10";
+            int a = Integer.parseInt(str);
+            System.out.println(a);
+        } catch (NumberFormatException es) {
+            //reporting block
+            System.out.println(es.getMessage());
+        }
+
+    }
+
+2.Checked Exception
+    Exceptions need to be handled by writing code using try...catch or throws.
+    The code which throws CheckedException, without handling using try...catch or throws , we cant compile the code.
+
+CheckedException is used in many java apis
+
+1.java.io apis
+2.java.sql apis
+3.java.net apis
+etc.....
+..............................................................................................
+				Custom Exception /Biz Exception
+.............................................................................................
+
+Custom Exceptions /Biz Exceptions can be created based on our application code.
+
+Custom Exception can be checked or unchecked Exception.
+............................................................................................
+				UnChecked Custom Exception
+.............................................................................................
+
+Steps:
+
+1.Write a class extends "java.lang.RuntimeException".
+
+2.add Constructors 
+
+public class BalanceNotFoundException extends RuntimeException {
+    public BalanceNotFoundException() {
+        super(); // calling super class constructor
+    }
+    public BalanceNotFoundException(String errorMessage) {
+        super(errorMessage); // calling super class constructor
+    }
+}
+
+3.write biz class , and methods ,simulate exception.
+
+we have to create Exception Object, we have to throw it
+
+package com.sapient.exceptions.custom.uncheck;
+
+public class AccountService {
+    private double balance = 1000.00;
+
+    public double witdraw(double amt) {
+        if (balance < amt) {
+            //error : you are throwing where this method is called.
+            throw new BalanceNotFoundException("Balance Not Found " + "balace=>" + balance + "amt to be withdrawn =>" + amt);
+        }
+        return balance - amt; //balance
+    }
+}
+
+4.call biz method , handle exception 
+
+package com.sapient.exceptions.custom.uncheck;
+
+public class Main {
+    public static void main(String[] args) {
+        AccountService accountService = new AccountService();
+        double response = 0.0;
+        response = accountService.witdraw(100);
+        System.out.println("Response is " + response);
+        //without try catch code will be compiled...
+//        response = accountService.witdraw(3000);
+//        System.out.println("Response is " + response);
+        //with try ...catch
+        try {
+            response = accountService.witdraw(3000);
+            System.out.println("Response is " + response);
+        } catch (BalanceNotFoundException es) {
+            System.out.println(es.getMessage());
+        }
+
+    }
+}
+.............................................................................................
+				Checked Custom Exception
+.............................................................................................
+
+Steps
+
+1.Write a class extends "java.lang.Exception".
+
+
+public class BalanceNotFoundException extends Exception {
+    public BalanceNotFoundException() {
+        super(); // calling super class constructor
+    }
+    public BalanceNotFoundException(String errorMessage) {
+        super(errorMessage); // calling super class constructor
+    }
+}
+
+2.write biz class , and methods ,simulate exception.
+public class AccountService {
+    private double balance = 1000.00;
+
+    public double witdraw(double amt) {
+        if (balance < amt) {
+            //error : you are throwing where this method is called.
+            throw new BalanceNotFoundException("Balance Not Found " + "balace=>" + balance + "amt to be withdrawn =>" + amt);
+        }
+        return balance - amt; //balance
+    }
+}
+
+You will get compile time error:
+ Unhandled exception: com.sapient.exceptions.custom.checked.BalanceNotFoundException
+
+We have not called exception, but why we are getting this error. we need to bind CheckedException with this method.
+
+"throws" -  keyword used to bind Checked Exception with method.
+
+public class AccountService {
+    private double balance = 1000.00;
+
+    public double witdraw(double amt) throws BalanceNotFoundException {
+        if (balance < amt) {
+            //error : you are throwing where this method is called.
+            throw new BalanceNotFoundException("Balance Not Found " + "balace=>" + balance + "amt to be withdrawn =>" + amt);
+        }
+        return balance - amt; //balance
+    }
+}
+
+3. caller side
+public class Main {
+    public static void main(String[] args) {
+        AccountService accountService = new AccountService();
+        double response = 0.0;
+        response = accountService.witdraw(100);
+        System.out.println("Response is " + response);
+    }
+}
+here compiler will throw error
+Unhandled exception: com.sapient.exceptions.custom.checked.BalanceNotFoundException
+
+Here checkedException forces to handle it
+
+using try ...catch...
+      try {
+            response = accountService.witdraw(4000);
+            System.out.println("Response is " + response);
+        } catch (BalanceNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+Sometimes , we are interested to use try...catch, how to compile the code?
+
+yes we can , escaping handling exception using try...catch.
+
+"using throws" keyword
+package com.sapient.exceptions.custom.checked;
+
+public class Main {
+    public static void main(String[] args) throws BalanceNotFoundException {
+        AccountService accountService = new AccountService();
+        double response = 0.0;
+        response = accountService.witdraw(4000);
+        System.out.println("Response is " + response);
+
+//        try {
+//            response = accountService.witdraw(4000);
+//            System.out.println("Response is " + response);
+//        } catch (BalanceNotFoundException e) {
+//            System.out.println(e.getMessage());
+//        }
+    }
+}
+.............................................................................................
+			 finally keyword
+
+
+finally is used for writing some clean up activties such as file closing operations,like so
+finally is called whether exception is thrown are not.
+
+package com.sapient.exceptions.custom.checked;
+
+public class Main {
+    public static void main(String[] args) { // throws BalanceNotFoundException {
+        AccountService accountService = new AccountService();
+        double response = 0.0;
+        try {
+            response = accountService.witdraw(1000);
+            System.out.println("Response is " + response);
+        } catch (BalanceNotFoundException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("called");
+        }
+    }
+}
+............................................................................................
+				multi catch
+
+We can have mulitple catch Statement. Each catch statement is used to identifiy specific errors.
+
+
+package com.sapient.exceptions;
+
+public class MulitCatch {
+
+    public static void checkMultiCatch() {
+        try {
+            String str = "10";
+            System.out.println(Integer.parseInt(str));
+            String str2 = "";
+            System.out.println(str2.toUpperCase());
+            int a = 10;
+            int res = a / 0;
+            System.out.println(res);
+
+        } catch (NumberFormatException es) {
+            System.out.println("Number error");
+        } catch (NullPointerException es) {
+            System.out.println("Null Error");
+        } catch (RuntimeException es) {
+            System.out.println(es.getMessage());
+        } catch (Exception es) {
+            System.out.println(es.getMessage());
+        } catch (Throwable es) {
+            System.out.println(es.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        checkMultiCatch();
+    }
+}
+.....................................................................................
+
+Java supports IO operations via java.io and javax.nio package.
+
+Java can read and write bytes/characters from the various sources
+
+Sources:
+ - Keyboard
+ - File
+ - Network sockets
+Java reads or writes data in the two forms
+
+1.byte 
+2.char
+
+Java uses a concept called "stream"
+
+Stream is nothing but "flow of data" 
+
+Types of Streams:
+
+1.Byte Streams
+  handle I/O of raw binary data.
+2.Character Streams 
+   handle I/O of character data, automatically handling translation to and from the local character set.
+3.Buffered Streams
+  optimize input and output by reducing the number of calls to the native API.
+4.Scanning and Formatting 
+    allows a program to read and write formatted text.
+5.I/O from the Command Line 
+  describes the Standard Streams and the Console object.
+6.Data Streams 
+   handle binary I/O of primitive data type and String values.
+7.Object Streams 
+   handle binary I/O of objects.
+
+
+Byte Streams
+   Programs use byte streams to perform input and output of 8-bit bytes. All byte stream classes are descended from InputStream and OutputStream.
+
+  There are many byte stream classes. To demonstrate how byte streams work, we'll focus on the file I/O byte streams, FileInputStream and FileOutputStream. Other kinds of byte streams are used in much the same way; they differ mainly in the way they are constructed.
+
+package com.ibm.io;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class ReadFile {
+    public static void main(String[] args) {
+        //E:\session\IBM\2022\july\BootCamp\JavaApps\src\main\resources
+        String filename = "E:\\session\\ibm\\2022\\july\\bootcamp\\javaApps\\src\\main\\resources\\hello.txt";        //
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            //read file content
+            int data;
+            while ((data = fileInputStream.read()) != -1) {
+                //  System.out.println(data + "  " + (char) data);
+                System.out.print((char) data);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.fillInStackTrace());
+        } catch (IOException e) {
+            System.out.println(e.fillInStackTrace());
+        }
+    }
+}
+...
+
+package com.ibm.io;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileReadAndWrite {
+    public static void main(String[] args) {
+        try {
+            String filename = "E:\\session\\ibm\\2022\\july\\bootcamp\\javaApps\\src\\main\\resources\\hello.txt";        //
+
+            FileInputStream fileInputStream = new FileInputStream(filename);
+
+            FileOutputStream fileOutputStream = new FileOutputStream("hello_copy.txt", true);
+            System.out.println(fileOutputStream.getFD());
+            int data;
+            while ((data = fileInputStream.read()) != -1) {
+                //System.out.print((char) data);
+                fileOutputStream.write(data);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("file Not found" + e);
+        } catch (IOException e) {
+            System.out.println("IO Exception" + e.getMessage());
+        }
+
+    }
+}
+..................................................................................
+..............................................................................................
+				 Data Structures
+.............................................................................................
+
+1.Array :
+ 
+In java array is Object.
+Java arrays are fixed in size
+Java arrays store only one type of data.
+
+package com.sapient.ds.arrays;
+
+public class ArrayDemo {
+    public static void main(String[] args) {
+        int[] list = {1, 2, 3, 4, 5, 6, 7};
+        System.out.println("length" + list.length);
+        //iterate
+        for (int i = 0; i < list.length; i++) {
+            System.out.println(list[i]);
+        }
+        //Array of employees
+        Employee[] employees = {
+                new Employee(1, "A"),
+                new Employee(2, "B")
+        };
+        for (int i = 0; i < employees.length; i++) {
+            System.out.println(employees[i]);
+        }
+    }
+}
+.....................................................................................
+..............................................................................................
+				Collections Framework
+
+Collections framework is ready made data structure.
+
+				  java.util.Collection
+
+The root interface in the collection hierarchy. A collection represents a group of objects, known as its elements. Some collections allow duplicate elements and others do not. Some are ordered and others unordered
+
+				 java.util.Collection
+					 |
+		          java.util.List        java.util.Set
+
+Behind every Collection implementation is array which is dynamic.
+
+
+List:
+
+An ordered collection (also known as a sequence)
+  Order could be index,hashvalue,insertion order
+Lists typically allow duplicate elements
+
+
+				 java.util.Collection
+					 |
+		          	   java.util.List 
+					 |
+
+1.ArrayList
+2.LinkedList
+3.Stack					
+
+
+ArrayList:
+ArrayList()
+
+ Constructs an empty list with an initial capacity of ten.
+
+ArrayList(Collection<? extends E> c)
+ Constructs a list containing the elements of the specified collection, in the order they are returned by the collection's iterator.
+
+ArrayList(int initialCapacity)
+  Constructs an empty list with the specified initial capacity.
+
+Generics:
+  Type container
+
+In the begining , the collection was designed to accept only objects with type of java.lang.Object
+  
+Why Generics?
+
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ArrayListMain {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList();
+        list.add(10); // list.add(new Integer(10)) Object o = new Integer
+        list.add("Hello");
+        //iterate
+        Iterator iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Integer ins = (Integer) iterator.next();
+            System.out.println(ins.intValue() * 10);
+        }
+    }
+
+100
+Exception in thread "main" java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+	at com.sapient.ds.collections.ArrayListMain.main(ArrayListMain.java:14)
+
+ClassCastException is most the dangerous exception which could be arrived in runtime only.
+
+
+How to avoid classCastException?
+
+ We have to prevent List to accept multiple types.
+
+List should accept only Integers.
+
+We need to create compile time error.
+
+Generics concept were introduced. Generics prevent multiple type to be added , can be fixed during compile time.			
+
+
+package com.ibm.ds;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Stack;
+
+public class LinkdeListDemo {
+    public static void main(String[] args) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("hello");
+        arrayList.add("hai");
+        arrayList.add("greet");
+        arrayList.add("welcome");
+        for (String item : arrayList) {
+            System.out.println(item);
+        }
+        System.out.println("..............");
+        LinkedList<String> linkedList = new LinkedList<>();
+        linkedList.add("hello");
+        linkedList.addFirst("welcome");
+        for (String item : linkedList) {
+            System.out.println(item);
+        }
+        //stack : L
+        Stack<Integer> integers = new Stack<>();
+        integers.push(1);
+        integers.push(3);
+        integers.push(2); // l
+        int vale = integers.pop(); // last value in the stack will be read
+        System.out.println(vale);
+
+    }
+}
+
+ArrayList - order is index order(0th,1th...)
+LinkedList -is insertion order(how you insert)
+Stack  -is last in first Order
+....................................................................................
+			.............................................................................................
+				  Set
+..............................................................................................
+
+A collection that contains no duplicate elements,like list only.
+
+Set Implementation:
+
+1.HashSet  == ArrayList
+2.LinkedHashSet ===LinkedList
+3.TreeSet
+<Type>
+
+ArrayList<Integer> list = new ArrayList<Integer>()
+ArrayList list = new ArrayList<Integer>()
+
+  //Generics Version
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(10); // list.add(new Integer(10)) Object o = new Integer
+        //list.add("hello");
+        list.add(20);
+        //iterate
+        Iterator iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Integer ins = (Integer) iterator.next();
+            System.out.println(ins.intValue() * 10);
+        }
+
+
+
+package com.sapient.ds.collections;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ListProcessingMain {
+    public static void processIntList() {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(100);
+        list.add(1);
+        list.add(2);
+        list.add(200);
+        System.out.println("Before Sorting");
+        for (Integer val : list) {
+            System.out.println(val);
+        }
+        Collections.sort(list);
+        System.out.println("After Sorting");
+        for (Integer val : list) {
+            System.out.println(val);
+        }
+    }
+
+    public static void processEmployeeList() {
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(new Employee(1, "A1", 100.89));
+        employeeList.add(new Employee(3, "A3", 1070.89));
+        employeeList.add(new Employee(2, "A2", 10330.89));
+        employeeList.add(new Employee(5, "A5", 10670.89));
+        System.out.println("Before Sorting");
+        for (Employee employee : employeeList) {
+            System.out.println(employee);
+        }
+        Collections.sort(employeeList);
+        System.out.println("After Sorting");
+        for (Employee employee : employeeList) {
+            System.out.println(employee);
+        }
+        Collections.sort(employeeList,new EmployeeIdDecendingOrder());
+        System.out.println("After Sorting");
+        for (Employee employee : employeeList) {
+            System.out.println(employee);
+        }
+    }
+
+    public static void main(String[] args) {
+        processEmployeeList();
+    }
+}
+package com.sapient.ds.collections;
+
+public class Employee implements Comparable<Employee> {
+    private int id;
+    private String name;
+    private double salary;
+
+    public Employee() {
+
+    }
+
+    public Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public int compareTo(Employee employee) {
+        return compare(this.id, employee.getId());
+    }
+
+    public int compare(int x, int y) {
+        return (x < y) ? -1 : ((x == y) ? 0 : 1);
+    }
+
+}
+............................................................................................
+
+LinkedList:
+package com.sapient.ds.collections;
+
+import java.util.LinkedList;
+
+public class LinkedListMain {
+    public static void main(String[] args) {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.addFirst(56);
+        list.addLast(222);
+        for (Integer value : list) {
+            System.out.println(value);
+        }
+    }
+}
+
+Stack: Last In First Out:
+..........................
+package com.sapient.ds.collections;
+
+import java.util.Stack;
+
+public class StackMain {
+    public static void main(String[] args) {
+        Stack<Integer> integers = new Stack<>();
+        integers.push(1);
+        integers.push(3);
+        integers.push(2); // l
+        int vale = integers.pop(); // last value in the stack will be read
+        System.out.println(vale);
+    }
+}
+.............................................................................................
+
+List order is index order(0th,1th...)
+Linked list is insertion order(how you insert)
+Stack is last in first Order
+.............................................................................................
+				  Set
+..............................................................................................
+
+A collection that contains no duplicate elements,like list only.
+
+Set Implementation:
+
+1.HashSet
+2.LinkedHashSet
+3.TreeSet
+
+
+1.HashSet
+ =>No duplicates
+ =>order is element hashcode value.
+
+public static void createHashSet() {
+        Set<Integer> integerSet = new HashSet<>();
+        integerSet.add(12);
+        integerSet.add(12);
+        integerSet.add(100);
+        integerSet.add(1);
+        for (Integer ins : integerSet) {
+            System.out.println(ins);
+        }
+        Set<Employee> employeeHashSet = new HashSet<>();
+        employeeHashSet.add(new Employee(1, "A1", 100.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(2, "A2", 10330.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+
+        for (Employee employee : employeeHashSet) {
+            System.out.println(employee);
+        }
+    }
+
+2.LinkedHashSet
+
+LinkedList + Set
+
+Order is insertion Order without duplicates
+
+ public static void createLinkedHashSet() {
+        Set<Integer> integerSet = new LinkedHashSet<>();
+        integerSet.add(12);
+        integerSet.add(12);
+        integerSet.add(100);
+        integerSet.add(1);
+        for (Integer ins : integerSet) {
+            System.out.println(ins);
+        }
+        Set<Employee> employeeHashSet = new LinkedHashSet<>();
+        employeeHashSet.add(new Employee(1, "A1", 100.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(2, "A2", 10330.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+
+        for (Employee employee : employeeHashSet) {
+            System.out.println(employee);
+        }
+    }
+.............................................................................................
+TreeSet:
+=>It avoids duplicates 
+=>The elements are ordered using their natural ordering of an element, or by a Comparator.
+  integer-asy 
+  integers-desc
+
+ public static void createTreeSet() {
+        Set<Integer> integerSet = new TreeSet<>();
+        integerSet.add(12);
+        integerSet.add(12);
+        integerSet.add(100);
+        integerSet.add(1);
+        for (Integer ins : integerSet) {
+            System.out.println(ins);
+        }
+        Set<Employee> employeeHashSet = new TreeSet<>(new EmployeeIdDecendingOrder());
+        employeeHashSet.add(new Employee(1, "A1", 100.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(3, "A3", 1070.89));
+        employeeHashSet.add(new Employee(2, "A2", 10330.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+        employeeHashSet.add(new Employee(5, "A5", 10670.89));
+
+        for (Employee employee : employeeHashSet) {
+            System.out.println(employee);
+        }
+    }
+
+
+.............................................................................................
+				  Map
+.............................................................................................
+
+Key-value Pair data Structure.
+
+Map Implementation:
+1.HashMap
+   Storing values based key-value ,key order is hash value
+2.LinkedHashMap
+   Storing values based key-value ,key order is insertion order
+3.TreeMap
+  Storing values based key-value ,key order is based on Comparator or Comparable
+
+
+package com.sapient.ds.collections;
+
+import java.util.*;
+
+public class MapImplementation {
+    public static void main(String[] args) {
+        //   createHashMap();
+        //createLinkedHashMap();
+        createTreeMap();
+    }
+    public static void createTreeMap() {
+        Map<Integer, Integer> hash = new TreeMap<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer x, Integer y) {
+                return  (x > y) ? -1 : ((x == y) ? 0 : 1);
+            }
+        });
+        hash.put(1, 100);
+        hash.put(4, 400);
+        hash.put(5, 500);
+        hash.put(3, 300);
+        hash.put(2, 200);
+
+        //convert map into set/Collection view for interation
+        Set<Integer> keys = hash.keySet();
+        for (Integer key : keys) {
+            System.out.println(key);
+        }
+        Collection<Integer> values = hash.values();
+        for (Integer value : values) {
+            System.out.println(value);
+        }
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) //using map.entrySet() for iteration
+        {
+            System.out.println("id: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
+    }
+
+    public static void createLinkedHashMap() {
+        Map<Integer, Integer> hash = new LinkedHashMap<>();
+        hash.put(1, 100);
+        hash.put(4, 400);
+        hash.put(5, 500);
+        hash.put(3, 300);
+        hash.put(2, 200);
+
+        //convert map into set/Collection view for interation
+        Set<Integer> keys = hash.keySet();
+        for (Integer key : keys) {
+            System.out.println(key);
+        }
+        Collection<Integer> values = hash.values();
+        for (Integer value : values) {
+            System.out.println(value);
+        }
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) //using map.entrySet() for iteration
+        {
+            System.out.println("id: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
+    }
+
+
+
+    public static void createHashMap() {
+        Map<Integer, Integer> hash = new HashMap<>();
+        hash.put(1, 100);
+        hash.put(4, 400);
+        hash.put(5, 500);
+        hash.put(3, 300);
+        hash.put(2, 200);
+
+        //convert map into set/Collection view for interation
+        Set<Integer> keys = hash.keySet();
+        for (Integer key : keys) {
+            System.out.println(key);
+        }
+        Collection<Integer> values = hash.values();
+        for (Integer value : values) {
+            System.out.println(value);
+        }
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) //using map.entrySet() for iteration
+        {
+            System.out.println("id: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
+
+
+    }
+}
+..................................................................................
+			Concurrency - Multi Threading
+..................................................................................
+	
+package com.ibm.multithreading;
+
+public class Task implements Runnable {
+    @Override
+    public void run() {
+        //going to have thread logic
+        System.out.println(Thread.currentThread().getName());
+
+    }
+}
+package com.ibm.multithreading;
+
+public class MulitThreadingMain {
+    public static void main(String[] args) {
+        //To know on which thread this current code is running
+        System.out.println("Main method is Running on => " + Thread.currentThread().getName());
+
+        //create new Thread
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(new Task());
+            thread.setName("Task-Thread-" + i);
+            //start thread
+            try {
+                Thread.sleep(1000); //pause current thread for 1 sec
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            thread.start();
+        }
+    }
+}
+.....................................................................................
+			  
+.....................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
