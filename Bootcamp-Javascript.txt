@@ -1,0 +1,261 @@
+				JavaScript
+.....................................................................................
+Topics:
+
+1.Javascript language
+2.Server side js
+   -Node,Express
+3.User interface Development lib
+   React.js
+
+Javascript language:
+
+What is javascript?
+
+ Javascript is programming language.
+
+What type/style of type of PL?
+
+ C is Procedural language
+ C++ is Object oriented language
+ Java is object oriented language
+
+Javascript is object based and functional language programming.
+JS is hybrid style languages.
+
+Why javascript was created? who created 
+
+Brendan eich.
+  Javascript was created for building dynamic web inside browsers.
+Programming language has versions
+
+1995 -javascript 
+
+
+ECMA  1996 - javascript 1.0  / ecma script 1.0 es 1.0
+
+1997 - es 2.0 did not come
+
+1999 - es 3.0
+
+2007 - es 4.0
+2008 - es 5.0
+2012-2015 - es 6.0 - today most of javascript(ui) and back end apps are built using 
+this version
+2016- es 7
+
+https://262.ecma-international.org/5.1/
+
+stable releases : es5 and es 6
+..................................................................................
+				Where is javascript
+
+
+Today js is every where
+
+you can build client side apps - front end apps- react,angular,vue js
+you can build server side apps - Node.js
+you can build mobile apps - react native,iconic.......
+
+
+Client side javascript apps:
+
+javascript runtime:
+
+running js code.
+
+javascript runtime or javascript vms , generally embeded inside every web browser
+
+chrome(v8)
+firefox(spider monkey)
+?
+etc...
+
+if you want to run javascript outside browser, nodejs
+.....................................................................................
+
+Learning path:
+
+Programming language fundamentals
+functional programming
+Object based concepts
+Browser apps - DOM programming
+
+
+Programming language fundamentals:
+
+variables,datatypes,values(literals)
+
+javascript project setup:
+
+Req:
+1.node.js -https://nodejs.org/en/
+2.vs code - editor
+3.browser
+
+Variables declaration:
+//variables,values,
+//var firstName="Subramanian" // 'Subramanian'
+//string 
+let firstName = "Subramanian" // 'Subramanian'
+//numbers
+let age = 18
+//boolean 
+let isActive = true
+//undefined
+let count;
+//NaN 
+let price;
+let totalPrice = price * 100 // NaN
+
+//infinity :div /0
+let avgSalary =  1000/0
+
+//print 
+console.log("Name" + firstName)
+console.log("Name", firstName)
+console.log(`Name ${firstName}`) //back tick and interploation notation 
+console.log(`Age ${age}`) //back tick and interploation notation 
+console.log(`isActive ${isActive}`) //back tick and interploation notation 
+console.log(`count ${count}`) //back tick and interploation notation 
+console.log(`price ${price}`) //back tick and interploation notation 
+console.log(`TotalPrice ${totalPrice}`) //back tick and interploation notation 
+console.log(`Avg Salary ${avgSalary}`) //back tick and interploation notation 
+
+...
+
+let vs const
+
+let you can reinialize
+const you cant -  readonly
+
+let a = 10
+console.log(a)
+a = 90
+console.log(a)
+const b =100
+console.log(b)
+b=90
+index.js:7 Uncaught TypeError: Assignment to constant variable.
+    at index.js:7:2
+(anonymous) @ index.js:7
+
+equal == and === / != / !==
+//javascript operators are similar to java , c,c++
+// equal operators
+//if ..else also similar to java
+//== compares only content: === compares content + type - which is recommended
+
+let a = 10
+let b = 20
+
+//compare
+if (a == b) {
+    console.log('a and b are equal')
+} else {
+    console.log('a and b are not equal')
+
+}
+let x = "10" //string 
+let y = 10 //number
+if (x === y) {
+    console.log('x and y are equal')
+} else {
+    console.log('x and y are not equal')
+
+}
+....................................................................................
+				Booleans - Advanced booleans
+....................................................................................
+let isValid = true;
+
+let a = 10;
+let b = 20;
+let isBig = a > b
+
+if (isValid) {
+    console.log('valid')
+} else {
+    console.log('invalid')
+}
+if (isBig) {
+    console.log('Big')
+} else {
+    console.log('Not Big')
+}
+/**
+ * In javascript everthing is true expect the following values
+ * 
+ * 1.boolean false 
+ * 2.empty string "" ,''
+ * 3.0
+ * 4.undfined
+ * 5.NaN
+ * 6.null
+ */
+
+let firstName = "Subramanian"
+if (firstName) {
+    //truthy block
+    console.log('Welcome ')
+} else {
+    //falsy block
+    console.log('Good bye ')
+}
+let price = 0
+if (price) {
+    //truthy block
+    console.log('Price ')
+} else {
+    //falsy block
+    console.log('Good bye ')
+}
+price=undefined
+if (price) {
+    //truthy block
+    console.log('Price ')
+} else {
+    //falsy block
+    console.log('Good bye ')
+}
+
+price *10
+if (price) {
+    //truthy block
+    console.log('Price ')
+} else {
+    //falsy block
+    console.log('Good bye ')
+}
+..................................................................................
+			   Functions
+..................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,175 @@
+			    Microservices
+.....................................................................................
+
+What is Micro Service?
+
+ Microservice is  architecture for building modern enterprise distributed applications.
+
+Before Microservice, enterprise distributed apps were built using concept called
+"Monolithic" Pattern
+
+if you are going to build banking application.
+
+Tech stack : Spring Boot
+
+Layers
+1.controller
+2.models/entities
+3.services
+4.repository
+
+Banking apps modules
+1.customer
+ 1.controller
+2.models/entities
+3.services
+4.repository
+
+2.accounts
+1.controller
+2.models/entities
+3.services
+4.repository
+
+3.loans
+1.controller
+2.models/entities
+3.services
+4.repository
+etc..
+
+Old way of building the enterprise apps(monolithic pattern)
+..............................................................
+
+Drawabacks
+
+1.The client has to wait until the whole apps is ready.
+2.Only we can deliver the software after completing entire modules
+3.once apps gone to the production, if there is any bug or new feature if we want
+  the whole app again we have re build.
+
+Micro services:
+
+1. spilt app the into small and small app called "Services" -  Micro Services
+
+2. Each app can be built,test, deploy independly.
+   
+3. If you wanto fix bug or introduce new feature, it is easy now.
+...................................................................................
+			 Microservices patterns
+
+https://microservices.io/
+
+Data bases and microservices
+
+Data management Patterns
+
+1.Database per Service
+2.Shared database
+3.Saga
+4.API Composition
+5.CQRS
+6.Domain event
+7.Event sourcing
+
+
+Micro Service Communication style
+.................................
+
+1.Remote Procedure Invocation
+2.Messaging
+3.Domain-specific protocol
+4.Idempotent Consumer
+
+
+Service discovery
+..................
+  Micro services never communicate directly.
+
+Client-side discovery
+Server-side discovery
+Service registry
+Self registration
+3rd party registration
+
+Reliability
+..............
+Circuit Breaker
+  Takes care of failures and slow calls
+
+
+Cross cutting concerns
+ common shared data and configuration data
+
+1.Microservice chassis
+2.Service Template
+3.Externalized configuration
+
+Testing
+.........
+1.Service Component Test
+2.Consumer-driven contract test
+3.Consumer-side contract test
+
+Production  related patterns
+............................
+1.Deployment
+Deployment patterns
+
+1.Multiple service instances per host
+2.Service instance per host
+3.Service instance per VM
+4.Service instance per Container
+5.Serverless deployment
+6.Service deployment platform
+
+Observability - Management of Microservices
+
+1.Log aggregation
+2.Application metrics
+3.Audit logging
+4.Distributed tracing
+5.Exception tracking
+6.Health check API
+7.Log deployments and changes
+
+....................................................................................
+				Microservices implementations
+
+
+Micro serivices as i told it is collection of  many patterns.
+
+We can implement these patterns in any language..
+
+Java and Microservice implementations:
+
+1.Spring Boot with Spring Cloud Projects
+
+2.Quarkus
+
+3.Vert.x
+
+4.MicroProfile
+
+5.Open liberty
+
+.................................................................................
+			Open Liberty
+....................................................................................
+A lightweight open framework for building fast and efficient cloud-native Java microservices.
+
+Build cloud-native apps and microservices while running only what you need. Open LibertyTM is the most flexible server runtime available to JavaTM developers in this solar system.
+.....................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
