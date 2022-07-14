@@ -1,0 +1,454 @@
+				Node.js
+.....................................................................................
+
+What is Node.js?
+
+ Node.js is platform and runtime for javascript.
+ Node.js is used to run js outside browser
+
+Applications of Node.js
+
+Building server side apps using js like spring boot in java.
+
+Server side web apps we can build using js on node.js
+
+Why Node.js is special from java like arch?
+
+Node.js is async and nonblocking arch where other languages are blocking and sync arch.
+
+Non blocking is a It is a generic concept, introduced in node.js
+
+What is difference between blocking and nonblocking?
+
+blocking arch, the current thread is waiting until some io operation /cpu intensive is completed
+where non blocking arch, the current thread is not going wait for io operation /cpu intensive is completed.
+
+Web server Design with blocking arch
+
+Request per thread model:
+  each client request is mapped by a single thread
+
+ eg:
+   100 req = 100 threads
+  1000 req = 1000 threads
+
+Drawback:
+ 1.if we create more and more threads
+    It takes lot of memory
+    cpu is busy with those threads for ctx switch
+ 2.Thread deadlock
+etc....
+
+Web Server design with non blocking arch
+........................................
+
+1.have only limited threads, lets say one or two
+
+Non blocking archs are implemented using event driven model.
+
+client----request------server-thread-----will dispatch work to os kernals
+client----request------server-thread-----will dispatch work to os kernals
+client----request------server-thread-----will dispatch work to os kernals
+client----request------server-thread-----will dispatch work to os kernals
+client----request------server-thread-----will dispatch work to os kernals
+
+client<----request<------server-thread<-----will dispatch work to os kernals
+
+Non blocking arch implementation:
+
+1.ngnix 
+2.node.js - 2008
+...................................................................................
+				Node.js Programming
+
+1.how to run simple js on node
+2.how to write modules
+3.node built in modules
+4.how to build web apps
+5.how to build web apps using node.js frameworks-express
+
+
+1.how to run simple js on node
+
+
+src/index.js
+//how to run js 
+
+function sayHello(name = '') {
+    return name
+}
+console.log(sayHello('Subramanian'))
+
+E:\session\IBM\2022\july\BootCamp\mynode-apps>node src/index.js
+....................................................................................
+			How to build server side apps
+
+
+1.You need modularity
+   In java we use packages
+
+Module Design patterns for js
+
+1.common js  - implemented in node.js
+ Sharing code
+  exports
+  module.exports
+
+ for linking and importing code
+  require()
+
+2.es 6 module design pattern
+
+
+..................................................................................
+src/index.js
+//main
+const ProductRepository = require('./repository/Product.repo')
+const ProductService = require('./services/Product.service')
+
+function main() {
+    let productRepo = new ProductRepository()
+    let productService = new ProductService(productRepo)
+    productService.findAll().forEach(product => {
+        console.log(product.id, product.name)
+    })
+}
+main()
+
+src/ProductService.js
+
+class ProductService {
+    constructor(productRepo) {
+        console.log('ProductService')
+        this.productRepo = productRepo
+    }
+    findAll() {
+       return this.productRepo.findAll()
+    }
+}
+module.exports = ProductService
+
+src/ProductRepo.js
+
+class ProductRepository {
+    constructor() {
+        console.log('ProductRepository')
+    }
+    findAll() {
+        return [
+            {
+                id: 1,
+                name: 'book'
+            },
+            {
+                id: 2,
+                name: 'Phone'
+            },
+            {
+                id: 3,
+                name: 'TV'
+            }
+        ]
+    }
+}
+//share this class outside 
+module.exports = ProductRepository
+.....................................................................................
+          		  Node.js Built in Modules
+....................................................................................
+
+in order to write non blocking apps , node provides lot of apis called modules
+https://nodejs.org/dist/latest-v16.x/docs/api/
+
+http module is used to create non blocking webservers and deploy web app.
+
+REST API for sending products data to user.
+
+const http = require('http')
+const ProductRepository = require('./repository/Product.repo')
+const ProductService = require('./services/Product.service')
+
+
+//there are steps available in node
+//1.create server 
+// const server = http.createServer((req, res) => {
+//     //request processing logic
+//     res.end('Hello')
+
+// })
+const server = http.createServer((req, res) => {
+    //request processing logic
+    let productRepo = new ProductRepository()
+    let productService = new ProductService(productRepo)
+    const products = JSON.stringify(productService.findAll())
+    //set header
+    res.writeHead(200,{
+        'Content-Type': 'application/json'
+    })
+    res.end(products)
+
+})
+
+//2.start server
+server.listen(3000, () => {
+    console.log('Node HTTP server is Running!')
+})
+
+...................................................................................
+			How to write enterprise node web apps
+..................................................................................
+
+Frameworks and libs
+ In node.js , we have so many libs and frameworks.
+
+How to introduce frameworks?
+ via npm
+.....................................................................................
+				npm - node package manager
+..................................................................................
+
+=> it is tool , used to install ,uninstall , distribute javascript code to other teams and community
+
+npm fundamentals:
+
+Every js project either client side or server side, must follow npm project rules
+
+1.every js project must have one file called "package.json"
+  npm init - command is used to create package.json file
+
+{
+  "name": "mynode-apps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+2.if want any third party lib/framework , you have to install
+
+  npm install packagename --options
+
+ options
+  --save => package is used for dev and production.
+  --save-dev = package is used for only dev
+  --gobal -g - package is outside project for tooling purpose
+
+node_modules:
+   This is folder , which stores all imported framework and lib files
+   
+
+Eg: if you want to build REST API using framework - Express.js
+
+Express:
+Fast, unopinionated, minimalist web framework for Node.js
+
+Express core concepts:
+
+in express every thing object
+
+Objects in express
+
+1.Application
+  We call Container object which other objects
+  entry and exit of an application
+  application is created by calling function
+
+2.Request
+
+3.Response
+
+4.Router
+
+1.Application object roll:
+
+-Routing HTTP requests
+-Configuring middleware
+-Rendering HTML views
+-Registering a template engine
+
+
+//express
+const express = require('express')
+//create Application object 
+const app = express()
+const ProductRepository = require('./repository/Product.repo')
+const ProductService = require('./services/Product.service')
+
+
+let productRepo = new ProductRepository()
+let productService = new ProductService(productRepo)
+
+//using app object , you can start server,write rest api,
+
+//end points 
+//HTTP GET 
+
+//product
+app.get('/api/products', (req, res) => {
+    res.status(200).json(productService.findAll())
+})
+app.post('/api/products', (req, res) => {
+    res.status(200).json({
+        message: 'post is called'
+    })
+})
+app.delete('/api/products', (req, res) => {
+    res.status(200).json({
+        message: 'delete is called'
+    })
+})
+app.put('/api/products', (req, res) => {
+    res.status(200).json({
+        message: 'update is called'
+    })
+})
+
+
+app.listen(3000, () => {
+    console.log('Express App is running!')
+})
+....................................................................................
+		   what if express app is growing with various
+			resources
+
+Resources/Domain
+
+products
+customers
+invoice
+payments
+purchaseorder
+
+We should not write inside one single file?
+
+Modularity:
+  Express Modularity - Router
+
+app.js
+//main program
+//express
+const express = require('express')
+const productRouter = require('./controllers/product.controller')
+const customerRouter =require('./controllers/customer.controller')
+//create Application object 
+const app = express()
+
+//bind router with main app 
+app.use('/api/products',productRouter)
+app.use('/api/customers',customerRouter)
+
+
+
+app.listen(3000, () => {
+    console.log('Express App is running!')
+})
+
+const express = require('express')
+const customerRouter = express.Router()
+
+
+//customer api 
+customerRouter.get('/list', (req, res) => {
+    res.status(200).json({
+        message: 'customer get is called'
+    })
+})
+customerRouter.post('/save', (req, res) => {
+    res.status(200).json({
+        message: 'customer post is called'
+    })
+})
+customerRouter.delete('/remove', (req, res) => {
+    res.status(200).json({
+        message: 'customer delete is called'
+    })
+})
+customerRouter.put('/update', (req, res) => {
+    res.status(200).json({
+        message: 'customer update is called'
+    })
+})
+module.exports = customerRouter
+
+.....
+//router
+const express = require('express')
+const ProductRepository = require('../repository/Product.repo')
+const ProductService = require('../services/Product.service')
+
+const productRouter = express.Router()
+let productRepo = new ProductRepository()
+let productService = new ProductService(productRepo)
+
+
+productRouter.get('/list', (req, res) => {
+    res.status(200).json(productService.findAll())
+})
+productRouter.post('/save', (req, res) => {
+    res.status(200).json({
+        message: 'post is called'
+    })
+})
+productRouter.delete('/remove', (req, res) => {
+    res.status(200).json({
+        message: 'delete is called'
+    })
+})
+productRouter.put('/update', (req, res) => {
+    res.status(200).json({
+        message: 'update is called'
+    })
+})
+
+module.exports = productRouter;
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

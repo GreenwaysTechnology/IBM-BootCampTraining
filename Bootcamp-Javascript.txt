@@ -228,8 +228,248 @@ if (price) {
     console.log('Good bye ')
 }
 ..................................................................................
-			   Functions
+			     Functions
 ..................................................................................
+
+//functions  declaration syntax:
+//named functions
+function sayHello() {
+    console.log('Hello')
+}
+//innovcation
+sayHello();
+//anonmous functions 
+/**
+ * function itself is value/literal in js .
+ * we can store the function into a variable
+ * we can pass function as paremeter to another function
+ * we can return function from another function  
+ */
+
+let a = 10;
+let greet = function () {
+    console.log('Greet')
+};
+greet();
+
+// es 6 syntax : arrow functions 
+let hai = () => {
+    console.log('Greet')
+};
+hai();
+
+//params and args ,return
+
+//default args 
+function add(a = 0, b = 0) {
+    return a + b
+}
+console.log(add(1, 2))
+console.log(add())
+
+let substract = function (a = 0, b = 0) {
+    return a - b
+}
+console.log(substract(1, 10))
+
+let multiply = (a = 0, b = 0) => {
+    return a * b
+}
+console.log(multiply(10, 10))
+//reduce code : if function has only one statement - a * b , remove { } and return 
+multiply = (a = 0, b = 0) => a * b
+console.log(multiply(10, 10))
+....................................................................................	
+			 functional Programming
+....................................................................................
+
+Javascript is fundamentally functional style programming language.
+
+Principles of fp:
+
+1.Higher order functions
+ 
+  function can receive input as another function as arg.
+  function can return another fn
+
+
+//Higher order functions 
+
+
+function sayHello(callback){
+    callback()
+}
+//passing lnline anonmous function 
+sayHello(function(){
+    console.log('hello')
+})
+
+//Higher order functions 
+
+function sayHello(callback) {
+    callback('hello')
+}
+//passing lnline anonmous function 
+sayHello(function (message = "") {
+    console.log(message)
+})
+let hello = function (message = "") {
+    console.log(message)
+}
+sayHello(hello)
+/////////////////////////////////////////////////////////////////////////////
+
+let sayGreet = function (callback) {
+    callback('greet')
+}
+sayGreet(function (message) {
+    console.log(message)
+})
+///////////////////////////////////////////////////////////////////////////////
+
+let login = (username, password, resolve, reject) => {
+    if (username === 'admin' && password === 'admin') {
+        resolve('Login success')
+    } else {
+        reject('Login Failed')
+    }
+}
+
+login('admin', 'admin', (status) => {
+    console.log(status)
+}, (err) => {
+    console.log(err)
+})
+login('ddd', 'dddd', (status) => {
+    console.log(status)
+}, (err) => {
+    console.log(err)
+})
+....................................................................................
+			 Closure - Return function from another function
+...................................................................................
+/**
+ * 
+ * @returns 
+ * if inner function access outter function variables, then it becomes closure
+ */
+// function counter() {
+//     let counter = 0
+//     return function () {
+//         return counter++
+//     }
+// }
+const counter = () => {
+    let counter = 0
+    return () => counter++
+}
+const myfun = counter()
+console.log(myfun())
+console.log(myfun())
+console.log(myfun())
+....................................................................................
+			  Object based programming
+....................................................................................
+
+objects:
+=>using constructor pattern
+    =>using functions
+    =>using classes
+
+//objects 
+//constructors
+function Employee(id = 0, name = '', salary = 0) {
+    //instance variables
+    this.id = id
+    this.name = name
+    this.salary = salary
+    //instance methods
+    this.calculate = function (noofDays = 0) {
+        return this.salary * noofDays
+    }
+}
+//object creation
+let emp = new Employee(1, 'Subramanian', 10000)
+console.log(emp.id, emp.name, emp.salary, emp.calculate(8))
+//es 6 syntax
+class Customer {
+    //instance variables
+    constructor(id = 0, name = '', invoice = 0) {
+        this.id = id
+        this.name = name
+        this.invoice = invoice
+    }
+    //instance methods
+    calculate(qty = 0) {
+        return this.invoice * qty
+    }
+}
+let customer = new Customer(1, 'Subramanian', 18)
+console.log(customer.id, customer.name, customer.invoice, customer.calculate(8))
+
+=>using literal patterns
+
+//literal objects 
+let employee = {
+    id: 1,
+    name: 'Subramanian',
+    address: {
+        city: 'Coimbatore'
+    }
+}
+console.log(`Id ${employee.id} name ${employee.name} city ${employee.address.city}`)
+.....................................................................................
+				Data Structures in js
+.....................................................................................
+Array : 
+ -object
+ -dynamic
+
+//arrays
+
+let list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+list.forEach(item => {
+    console.log(item)
+})
+//list of employees
+let empList = [
+    {
+        id: 1,
+        name: 'A',
+        salary: 1000
+    },
+    {
+        id: 2,
+        name: 'B',
+        salary: 400
+    },
+    {
+        id: 3,
+        name: 'C',
+        salary: 1900
+    }
+
+]
+empList.forEach(employee => {
+    console.log(employee.id, employee.name, employee.salary)
+})
+.....................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
