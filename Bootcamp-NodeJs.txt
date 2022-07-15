@@ -405,7 +405,165 @@ productRouter.put('/update', (req, res) => {
 })
 
 module.exports = productRouter;
+.....................................................................................
+			Express with Mongodb communcication
+....................................................................................
 
+Mongodb
+  |
+ database
+    |
+    collection
+        |
+       document - CRUD
+   
+     
+const express = require("express");
+
+// recordRoutes is an instance of the express router.
+// We use it to define our routes.
+// The router will be added as a middleware and will take control of requests starting with path /record.
+const recordRoutes = express.Router();
+
+// This will help us connect to the database
+const dbo = require("../db");
+
+// This help convert the id from string to ObjectId for the _id.
+const ObjectId = require("mongodb").ObjectId;
+
+
+// This section will help you get a list of all the records.
+recordRoutes.route("/list").get(function (req, res) {
+  let db_connect = dbo.getDb("employees");
+  db_connect
+    .collection("records")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
+
+// This section will help you get a single record by id
+recordRoutes.route("/list/:id").get(function (req, res) {
+  let db_connect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  db_connect
+    .collection("records")
+    .findOne(myquery, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
+
+// This section will help you create a new record.
+recordRoutes.route("/add").post(function (req, response) {
+  let db_connect = dbo.getDb();
+  let myobj = {
+    name: req.body.name,
+    position: req.body.position,
+    level: req.body.level,
+  };
+  db_connect.collection("records").insertOne(myobj, function (err, res) {
+    if (err) throw err;
+    response.json(res);
+  });
+});
+
+// This section will help you update a record by id.
+recordRoutes.route("/update/:id").post(function (req, response) {
+  let db_connect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  let newvalues = {
+    $set: {
+      name: req.body.name,
+      position: req.body.position,
+      level: req.body.level,
+    },
+  };
+  db_connect
+    .collection("records")
+    .updateOne(myquery, newvalues, function (err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
+      response.json(res);
+    });
+});
+
+// This section will help you delete a record
+recordRoutes.route("/:id").delete((req, response) => {
+  let db_connect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.params.id) };
+  db_connect.collection("records").deleteOne(myquery, function (err, obj) {
+    if (err) throw err;
+    console.log("1 document deleted");
+    response.json(obj);
+  });
+});
+
+module.exports = recordRoutes;
+
+//
+db connection
+
+const { MongoClient } = require("mongodb");
+
+const Db = "mongodb://localhost:27017/demo";//process.env.ATLAS_URI;
+
+const client = new MongoClient(Db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+var _db;
+
+module.exports = {
+  connectToServer: function (callback) {
+    client.connect(function (err, db) {
+      // Verify we got a good "db" object
+      if (db) {
+        _db = db.db("employees");
+        console.log("Successfully connected to MongoDB.");
+      }
+      return callback(err);
+    });
+  },
+
+  getDb: function () {
+    return _db;
+  },
+};
+//main program
+//express
+const express = require('express')
+const productRouter = require('./controllers/product.controller')
+const customerRouter =require('./controllers/customer.controller')
+const employeeRouter =require('./controllers/employee')
+// get driver connection
+const dbo = require("./db");
+
+//create Application object 
+const app = express()
+
+//bind router with main app 
+app.use('/api/products',productRouter)
+app.use('/api/customers',customerRouter)
+app.use('/api/employees',employeeRouter)
+
+
+
+// app.listen(3000, () => {
+//     console.log('Express App is running!')
+// })
+app.listen(3000, () => {
+    // perform a database connection when server starts
+    dbo.connectToServer(function (err) {
+        if (err) console.error(err);
+
+    });
+    console.log(`Server is running on port: ${3000}`);
+});
+..................................................................................
 
 
 

@@ -836,4 +836,124 @@ for eg:
 By default, transaction is disabled in databse.
 
 we need to enable transaction features.
-......................................................................................
+.....................................................................................
+				NO-SQL Databases
+....................................................................................
+
+What is the problem RDBMS?
+
+1.Vendor lock-in
+    once if you decide the storage model, you cant alter that.
+
+For eg :
+ you  create table having 3 columns
+ after some time you want to add new column - In RDBMS it is not possible
+
+2.fixed schema
+  we can store only data in row column manner
+
+
+The common characteristics of NoSQL databases are
+• Not using the relational model
+• Running well on clusters.
+• Open-source
+• Built for the 21st century web estates
+• Schemaless
+
+The most important result of the rise of NoSQL is Polyglot Persistence.
+=====================================================================================
+How to choose the right DB
+=====================================================================================
+When you have to decide on a NoSQL database for your project, following are the things you have to choose 
+
+- Data Model 
+- Distribution Model
+
+===============================
+Choice 1 - Data Models - How to store data
+=====================================================================================
+
+Different kind of data models in NoSQL are : 
+- Key-Value
+- Document 
+- Column Family
+- Graph 
+
+Key-Value:
+  Storing data using key values
+
+id:1
+redis
+
+Document 
+What is a Document Database?
+A document database (also known as a document-oriented database or a document store) is a database that stores information in documents.
+
+{
+     "_id": 1,
+     "first_name": "Tom",
+     "email": "tom@example.com",
+     "cell": "765-555-5555",
+     "likes": [
+        "fashion",
+        "spas",
+        "shopping"
+     ],
+     "businesses": [
+        {
+           "name": "Entertainment 1080",
+           "partner": "Jean",
+           "status": "Bankrupt",
+           "date_founded": {
+              "$date": "2012-05-19T04:00:00Z"
+           }
+        },
+        {
+           "name": "Swag for Tweens",
+           "date_founded": {
+              "$date": "2012-11-01T04:00:00Z"
+           }
+        }
+     ]
+  }
+
+Mongo db:
+  It is one of the most popular document database is Mongodb
+
+Collections(like tables)
+A collection is a group of documents. Collections typically store documents that have similar contents.
+
+How to perform operations on Document Databases?
+
+1.Create: Documents can be created in the database. Each document has a unique identifier.
+
+2.Read: Documents can be read from the database. The API or query language allows developers to query for documents using their unique identifiers or field values. 
+
+3.Indexes can be added to the database in order to increase read performance.
+
+4.Update: Existing documents can be updated — either in whole or in part.
+Delete: Documents can be deleted from the database.
+...................................................................................
+Column Oriented Database:
+  Stores data in the form of columns.
+
+eg:
+   Amazon Redshift
+
+.....................................................................................
+Graph Database:
+  Stores data in the form tree model.
+
+  A graph database stores nodes and relationships instead of tables, or documents. Data is stored just like you might sketch ideas on a whiteboard. Your data is stored without restricting it to a pre-defined model, allowing a very flexible way of thinking about and using it.
+
+Neo4j.
+.....................................................................................
+
+
+
+
+
+
+
+
+

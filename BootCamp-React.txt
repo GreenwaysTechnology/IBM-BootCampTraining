@@ -1,0 +1,502 @@
+				React.js
+....................................................................................
+
+What is React?
+  A JavaScript library for building user interfaces.
+
+User interface technologies:
+
+1.For browser
+
+JQuery
+Angular
+React
+Vue
+
+React :
+ lib ,created by face book.
+.....................................................................................
+
+React core skills:
+1.HTML 5
+2.CSS 3
+3.Javascript ES 6
+
+
+React core concepts:
+
+1.JSX
+   It is small language created by react for building user face
+ JSX = mix html + javascript
+  
+2.Components 
+   It is object which represents user interface
+
+3.Data
+   state and props
+
+4.Virtual DOM 
+    Virtual representation of real DOM.
+5.Redux
+    it is lib to store data and its logic
+6.Router
+    It is used to build app with navigation.
+
+....................................................................................
+			   How to build create app
+
+we have cli tool to create project.
+
+1.npm install create-react-app -g
+
+2.create project
+  create-react-app myui-app
+
+
+Build UI using React;
+
+1.create component
+
+2.render the component
+
+import React from 'react' //const React = require('react')
+import ReactDOM from 'react-dom'
+
+//declare component
+/**
+ * components can be delcared in three ways 
+ * 1.variables pattern
+ * 2.function pattern
+ * 3.class pattern
+ */
+//using variables
+const Greeter = <div>
+    <h1>Hello</h1>
+</div>
+//
+ReactDOM.render(Greeter,document.getElementById('root'))
+
+
+import React from 'react' //const React = require('react')
+import ReactDOM from 'react-dom'
+
+//declare component
+/**
+ * components can be delcared in three ways 
+ * 1.variables pattern
+ * 2.function pattern
+ * 3.class pattern
+ */
+//using functions
+const Greeter = () => {
+    return <div>
+        <h1>Hello</h1>
+    </div>
+}
+//
+ReactDOM.render(<Greeter />, document.getElementById('root'))
+............................
+
+import React from 'react' //const React = require('react')
+import ReactDOM from 'react-dom'
+
+//declare component
+/**
+ * components can be delcared in three ways 
+ * 1.variables pattern
+ * 2.function pattern
+ * 3.class pattern
+ */
+//using class
+class Greeter extends React.Component {
+    render() {
+        return <div>
+            <h1>Hello</h1>
+        </div>
+    }
+
+}
+
+ReactDOM.render(<Greeter />, document.getElementById('root'))
+.....................................................................................
+Component Composition:
+import React from "react"
+import ReactDOM from "react-dom"
+
+index.js
+
+//component compostion
+//The complex ui is broken into smaller and smaller 
+
+/**
+ * Layout(Page)
+ *   -header
+ *   -body 
+ *   -footer
+ */
+const Header = () => {
+    return <header>
+        <h1>Header</h1>
+    </header>
+}
+const Body = () => {
+    return <div>
+        <section>
+            <p>This is section</p>
+        </section>
+        <section>
+            <p>This is section</p>
+        </section>  <section>
+            <p>This is section</p>
+        </section>  <section>
+            <p>This is section</p>
+        </section>  <section>
+            <p>This is section</p>
+        </section>  <section>
+            <p>This is section</p>
+        </section>  <section>
+            <p>This is section</p>
+        </section>
+    </div>
+}
+const Footer = () => {
+    return <footer>
+        <h5>This is footer</h5>
+    </footer>
+}
+const Page = () => {
+    return <div>
+        <Header />
+        <Body />
+        <Footer />
+    </div>
+}
+const App = () => <Page />
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+.....................................................................................
+
+footer/footer.jsx
+
+export const Footer = () => {
+    return <footer>
+        <h5>This is footer</h5>
+    </footer>
+}
+header/header.jsx
+
+export const Header = () => {
+    return <header>
+        <h1>Header</h1>
+    </header>
+}
+src/App.js
+import './App.css';
+import { Page } from './Page'
+
+function App() {
+  return (
+    <div className="App">
+         <Page/>
+    </div>
+  );
+}
+
+export default App;
+
+src/index.js
+import App from './App'
+import ReactDOM from 'react-dom'
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+...................................................................................
+				CSS integration with React
+.....................................................................................
+
+className attribute must be used for class based css
+style attribute can be also used for inline styling.
+
+css :
+1.ourown css files
+2.third party css  frameworks - bootstrap.
+
+
+// import './App.css';
+import 'bootstrap/dist/css/bootstrap.css'
+import { Page } from './Page'
+
+function App() {
+  return (
+    <div className="container">
+         <Page/>
+    </div>
+  );
+}
+
+export default App;
+....................................................................................
+			   Data
+...................................................................................
+Data can be primitive data -numbers,strings,booleans
+Data can be object /array
+
+Data is supplied to component in two ways
+
+1.props pattern
+	passing data from the parent to child component
+2.state pattern
+     keeping data inside the component, later we change the data which is called state mutation.
+
+Props:
+//Props : we can send data from the parent component to child component 
+import React from "react"
+import ReactDOM from "react-dom"
+
+
+//Greeter - Parent 
+const Greeter = () => {
+    // send data as prop 
+    //<> Fragment
+    return <>
+        <Hello name={"Subramanian"} />
+        <Hello name={"Ram"} />
+    </>
+}
+//Hello - Child Component
+const Hello = props => {
+    return <p>Hello {props.name}</p>
+}
+
+
+
+
+const App = () => <Greeter />
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+.....................................................................................
+			 props pattern
+....................................................................................
+//Props : we can send data from the parent component to child component 
+import React from "react"
+import ReactDOM from "react-dom"
+
+const Product = () => {
+
+    return <>
+        <ProductDetails product={{
+            id: 1,
+            name: 'Phone'
+        }} reviews={['Good', 'Bad']} />
+    </>
+}
+//Hello - Child Component
+const ProductDetails = props => {
+    return <div>
+        <h1>Id : {props.product.id}</h1>
+        <h1>Name : {props.product.name}</h1>
+        {/* render */}
+        <ul>
+            {props.reviews.map(review => {
+                return <li>
+                    <span>{review}</span>
+                </li>
+            })}
+        </ul>
+    </div>
+}
+
+
+const App = () => <Product />
+
+ReactDOM.render(<App />, document.getElementById('root'))
+...................................................................................
+		 State Pattern -Event handling
+.................................................................................
+
+//Props : we can send data from the parent component to child component 
+import React, { useState } from "react"
+import ReactDOM from "react-dom"
+
+//state pattern
+const Counter = () => {
+
+    //declare state variable
+    const [count, setCount] = useState(0)
+
+    //listener
+    const onIncrement = () => {
+        //increment counter 
+        setCount((count) => {
+            return count + 1
+        })
+    }
+    const onDecrement = () => {
+        //increment counter 
+        setCount((count) => {
+            return count - 1
+        })
+    }
+
+    return <div>
+        <h1>State Pattern-Counter App</h1>
+        <h2>Counter : {count}</h2>
+        <button onClick={onIncrement} >+</button>
+        <button onClick={onDecrement} >-</button>
+
+    </div>
+
+}
+
+const App = () => <Counter />
+
+ReactDOM.render(<App />, document.getElementById('root'))
+....................................................................................
+			REST API Call with React
+...................................................................................
+import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
+
+
+const Todos = () => {
+    const [state, setState] = useState({
+        error: null,
+        isLoaded: false, //spiner status
+        todos: [] // data
+    })
+    //inside useEffect we write webservice call 
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/todos')
+            .then(response => response.json())
+            .then(todos => {
+                setTimeout(() => {
+                    setState(prevState => ({ ...prevState, todos: prevState.todos.concat(todos), isLoaded: true }))
+                }, 5000)
+            })
+            .catch(err => {
+                setState(prevState => ({ ...prevState, isLoaded: true, error: err }))
+            });
+    }, [])
+  //render code
+  const { error, isLoaded, todos } = state;
+  if (error) {
+      return <Error error={error} />
+  } else if (!isLoaded) {
+      return <Spinner />
+  } else {
+      return <div>
+          <h1>Todo App</h1>
+          <ul>
+              {state.todos.map(todo => {
+                  return <li key={todo.id}>{todo.title}</li>
+              })}
+          </ul>
+      </div>
+  }
+
+}
+
+const Error = props => {
+    return <>
+        <h2>{props.error}</h2>
+    </>
+}
+const Spinner = props => {
+    return <>
+        <h2 style={{ backgroundColor: 'yellow' }}>Loading...</h2>
+    </>
+}
+const App = props => <div>
+    <h1>REST API Integration</h1>
+    <Todos />
+</div>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+...................................................................................
+			Router
+..................................................................................
+
+npm install react-router-dom@6
+
+import React, { useEffect } from 'react'
+import ReactDOM from "react-dom"
+import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
+
+const Layout = () => {
+    // menus
+    return <div><nav>
+        <ul>
+            <li>
+                <Link to="/">Home</Link>
+            </li>
+            <li>
+                <Link to="/about">About</Link>
+            </li>
+            <li>
+                <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
+                <Link to="/transcations">Transactions</Link>
+            </li>
+
+        </ul>
+    </nav>
+        <hr />
+
+        {/* An <Outlet> renders whatever child route is currently active,
+        so you can think about this <Outlet> as a placeholder for
+        the child routes we defined above. */}
+        <Outlet />
+    </div>
+}
+
+const Home = () => <h1>IBM-home</h1>
+const About = () => <h1>IBM-about</h1>
+const Dashboard = () => <h1>IBM-dashboard</h1>
+const Transactions = () => <h1>TransactionPage</h1>
+
+const App = () => {
+
+    return <BrowserRouter>
+        <Routes>
+            {/* root route */}
+            <Route path="/" element={<Layout />}>
+                {/* Child routes */}
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="transcations" element={<Transactions />} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
